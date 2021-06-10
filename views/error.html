@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block header %}
+{% include "outline/header/_error.html" %}
+{% endblock %}
+{% block mainMenu %}
+{% endblock %}
+
+{% block content %}
+<h1>{{ error.message }}</h1>
+<h2>{{ error.status }}</h2>
+<pre>{{ error.stack }}</pre>
+{% endblock %}
+
+{% block footer %}
+{% include "outline/footer/_error.html" %}
+{% endblock %}

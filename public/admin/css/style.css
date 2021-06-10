@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
+* { font-family: 'Nanum Gothic', sans-serif; box-sizing: border-box; outline: none; }
+html { font-size: 12px; color: #212121; }
+ul { list-style: none; padding: 0; margin: 0; }
+a { text-decoration: none; color: #212121; }
+
+dl { display: table; width: 100%; padding: 0; margin: 0; }
+dt { display: table-cell; width: 120px; vertical-align: middle; }
+dd { display: table-cell; vertical-align: middle; }
+
+/** 공통 */
+.table_cols { border-spacing: 0; padding: 0; width: 100%; }
+.table_cols th { width: 120px; background-color: #f8f8f8; border-bottom: 1px solid #d5d5d5; } 
+.table_cols td { border-bottom: 1px solid #d5d5d5; }
+.table_cols tr:first-child th, .table_cols tr:first-child td { border-top: 1px solid #d5d5d5; }
+

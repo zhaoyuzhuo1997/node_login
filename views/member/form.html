@@ -1,0 +1,49 @@
+{% extends '../layout.html' %}
+
+<!-- 회원 가입, 수정 양식 -->
+{% block content %}
+<form method='post' action='/member/join' target='ifrmHidden' autocomplete='off'>
+	{% if naverProfile.id %}
+	<h1>네이버 아이디로 회원 가입</h1>
+	{% endif %}
+	<dl>
+		<dt>아이디</dt>
+		<dd>
+			<input type='text' name='memId'>
+		</dd>
+	</dl>
+	{% if not naverProfile.id %}
+	<dl>
+		<dt>비밀번호</dt>
+		<dd>
+			<input type='password' name='memPw'>
+		</dd>
+	</dl>
+	<dl>
+		<dt>비밀번호 확인</dt>
+		<dd>
+			<input type='password' name='memPwRe'>
+		</dd>
+	</dl>
+	{% endif %}
+	<dl>
+		<dt>회원명</dt>
+		<dd>
+			<input type='text' name='memNm' value='{{ memNm }}'>
+		</dd>
+	</dl>
+	<dl>
+		<dt>이메일</dt>
+		<dd>
+			<input type='email' name='email' value='{{ email }}'>
+		</dd>
+	</dl>
+	<dl>
+		<dt>휴대전화번호</dt>
+		<dd>
+			<input type='text' name='cellPhone'>
+		</dd>
+	</dl>
+	<input type='submit' value='회원가입'>
+</form>
+{% endblock %}

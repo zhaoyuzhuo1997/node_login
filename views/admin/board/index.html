@@ -1,0 +1,50 @@
+{% extends '../layout.html' %}
+{% block content %}
+<div class='mtitle'>게시판 등록</div>
+<form method='post' action='/admin/board' target='ifrmHidden' autocomplete='off'>
+	<table class='table_cols'>
+		<tr>
+			<th>아이디</th>
+			</td>
+				<input type='text' name='id'>
+			</td>
+			<th>게시판명</th>
+			<td>
+				<input type='text' name='boardNm'>
+			</td>
+		</tr>
+	</table>
+	<input type='submit' value='게시판 생성하기' class='submit_btn'>
+</form>
+
+<div class='mtitle'>게시판 목록</div>
+<form method='post' action='/admin/board?_method=DELETE' target='ifrmHidden'>
+	<table class='table_rows'>
+		<thead>
+			<tr>
+				<th width='20' align='center'>
+					<input type='checkbox' class='check_all' data-target-name='id'>
+				</th>
+				<th width='150'>아이디</th>
+				<th width='300'>게시판명</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for item in list %}
+		<tr>
+			<td align='center'>
+				<input type='checkbox' name='id' value='{{ item.id }}'>
+			</td>
+			<td>{{ item.id }}</td>
+			<td>{{ item.boardNm }}</td>
+			<td>
+				<a href='/admin/board/{{ item.id }}' class='btn1'>설정하기</a>
+				<a href='/board/list/{{ item.id }}' class='btn2' target='_blank'>미리보기</a>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</form>
+{% endblock %}

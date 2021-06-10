@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<link rel="stylesheet" type="text/css" href="/admin/css/style.css">
+		{% if addCss %}
+		{% for css in addCss %}
+		<link rel="stylesheet" type="text/css" href="/admin/css/{{ css }}.css">
+		{% endfor %}
+		{% endif %}
+		{% block style %}
+		{% endblock %}
+		<script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script type='text/babel' src='/admin/js/common.js'></script>
+		{% if addScript %}
+		{% for script in addScript %}
+		<script type='text/babel' src='/admin/js/{{ script }}.js'></script>
+		{% endfor %}
+		{% endif %}
+		{% block script %}
+		{% endblock %}
+		<title>{% if pageTitle %}{{ pageTitle }} - {% endif %} 사이트 관리자</title>
+	</head>
+	<body{%if bodyClass %} class="body_{{ bodyClass }}"{% endif %}>
+	<header>
+	{% block header %}
+	{% include "admin/outline/header/_main.html" %}
+	{% endblock %}
+	</header>
+	
+	<main id='main_wrap'>
+	{% block content %}
+	{% endblock %}
+	</main>
+	
+	<footer>
+	{% block footer %}
+	{% include "admin/outline/footer/_main.html" %}
+	{% endblock %}
+	</footer>
+	<iframe name='ifrmHidden' width='100%' height='500' frameborder='0'></iframe>
+	</body>
+</html>

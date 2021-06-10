@@ -1,0 +1,32 @@
+{
+  "name": "node_login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app",
+    "start": "cross-env NODE_ENV=production pm2 start app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "nunjucks": "^3.2.3",
+    "pm2": "^4.5.6",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

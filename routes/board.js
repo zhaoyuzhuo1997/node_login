@@ -4,12 +4,35 @@
 */
 const board = require('../models/board');
 const { boardConfig } = require('../middlewares/board_config');
-const { writeValidator, permissionCheck, guestOnly } = require('../middlewares/board_validator');
+const { writeValidator, permissionCheck, guestOnly, commentValidator } = require('../middlewares/board_validator');
 const { alert, go } = require('../lib/common');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
+/** 댓글 */
+router.route('/comment')
+	/** 댓글 작성 처리*/
+	.post(commentValidator, async (req, res, next) => {
+		const result = await board
+										.data(req.body, req.session)
+										.writeComment();
+		if (idx) { // 댓글 작성 성공
+			const url = `/board/view/${req.body.idxBoard}/#comment_${idx}`;
+			return go(url, res, "parent");
+		}
+		
+		// 댓글 작성 실패
+		return alert("댓글 작성 실패하였습니다.", res);
+	})
+	/** 댓글 수정 */
+	.patch((req, res, next) => {
+		
+	})
+	/** 댓글 삭제 */
+	.delete((req, res, next) => {
+		
+	});
 
 /** 게시글 작성(양식, DB 처리), 수정, 삭제  - /board */
 router.route('/:id')
@@ -121,11 +144,6 @@ router.get("/view/:idx", async (req, res, next) => {
 	
 	// 게시글 보기 하단에 게시글 목록 노출
 	if (data.config.useViewList) {
-		/**
-		const data = await board
-								.addWhere(where)
-								.getList(id, req.query.page, rowsPerPage, req.query);
-		*/
 		const rowsPerPage = data.config.rowsPerPage || 20;
 		/** 검색 처리 S */
 		const where = {
@@ -147,6 +165,12 @@ router.get("/view/:idx", async (req, res, next) => {
 			data[key] = boardList[key];
 		}
 	}
+	
+	/** 댓글 사용하는 경우 작성된 댓글 목록 조회 S */
+	if (data.config.useComment) {
+		const comments = await board.getComments(idx);
+	}
+	/** 댓글 사용하는 경우 작성된 댓글 목록 조회 E */
 	
 	return res.render("board/view", data);
 });
@@ -224,5 +248,6 @@ router.route("/password/:idx")
 				return alert(err.message, res);
 			}
 		});
-
+		
+	
 module.exports = router;

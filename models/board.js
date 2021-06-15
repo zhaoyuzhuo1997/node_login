@@ -413,6 +413,41 @@ const board = {
 
 		return result;
 	},
+	/**
+	* 댓글 작성
+	*
+	* @return Interger|Boolean 작성 성공시 -> 등록번호(idx), 작성 실패시에는 false
+	*/
+	writeComment : async function() {
+		try {
+			const memNo = this.session.memNo || 0;
+			let hash = "";
+			if (memNo && this.params.password) {
+				hash = await bcrypt.hash(this.params.password, 10);
+			}
+			
+			const sql = `INSERT INTO boardcomment (idxBoard, memNo, poster, password, comment)
+								VALUES (:idxBoard, :memNo, :poster, :password, :comment)`;
+			const replacements = {
+				idxBoard: this.params.idxBoard,
+				memNo,
+				poster : this.params.poster,
+				password : hash,
+				comment : this.params.comment,
+			};
+			
+			const result = await sequelize.query(sql, {
+				replacements,
+				type : QueryTypes.INSERT,
+			});
+			
+			return result[0];
+		} catch (err) {
+			logger(err.stack, 'error');
+			return false;
+		}
+	},
+	
 };
 
 module.exports = board;

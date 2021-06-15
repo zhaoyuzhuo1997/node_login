@@ -35,4 +35,10 @@
 .board_default .write_btn { position: absolute; right: 0; top: -35px; }
 
 /** default/_comment.html */
-.board_default .comment_box {}
+.board_default.comment { border: 1px solid #d5d5d5; padding: 10px; }
+.board_default.comment input[type='text'],
+.board_default.comment input[type='password'] { width: 100px; height: 25px; }
+.board_default.comment .comment_info { margin-bottom: 5px; }
+.board_default.comment textarea { border: 1px solide #212121; background-color: #f8f8f8; padding: 10px; resize: none; width: calc(100% - 130px); margin-right: 10px; display: block; float: left; height: 100px; }
+.board_default.comment .write_comment { float: right; width: 120px; height: 100px; display: block; border: 1px solid #212121; background-color: #212121; color: #ffffff; cursor: pointer;}
+.board_default.comment .comment_form:after { clear: both; content: ''; display: block; }

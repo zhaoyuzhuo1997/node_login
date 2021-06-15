@@ -115,7 +115,39 @@ module.exports.guestOnly = async (req, res, next) => {
 	
 	} catch (err) {
 		logger(err.stack, 'error');
-		return alert(err.message);
+		return alert(err.message, res);
 	}
+	next();
+};
+
+/** 댓글 유효성 검사 */
+module.exports.commentValidator = (req, res, next) => {
+	const required = {
+		idxBoard : '잘못된 접근입니다.',
+		poster : '작성자를 입력하세요',
+		comment : '댓글을 입력하세요',
+	};
+	
+	if (!req.isLogin) { // 비회원인 경우 댓글 수정, 삭제 비밀번호 추가
+		required.password = "비밀번호를 입력하세요";
+	}
+	
+	if (req.method == 'PATCH') { // 댓글 수정 
+		delete required.idxBoard;
+		required.idx = "잘못된 접근입니다.";
+	}
+	
+	try {
+		for (key in required) {
+			if (!req.body[key]) {
+				throw new Error(required[key]);
+			}
+		}
+		
+	} catch (err) {
+		logger(err.stack, 'error');
+		return alert(err.message, res);
+	}
+	
 	next();
 };

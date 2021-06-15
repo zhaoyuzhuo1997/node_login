@@ -19,7 +19,7 @@ module.exports.writeValidator = async (req, res, next) => {
 	// 글 수정시 추가 필수 컬럼
 	if (req.method == "PATCH") {
 		const data = await board.get(req.body.idx);
-		if (data && !data.memNo) { // 비회원 게시글 수정시
+		if (data && !data.memNo) { // 비회원 게시글 수정시 
 			isPasswordRequired = true;
 		}
 		

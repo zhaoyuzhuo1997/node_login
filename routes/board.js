@@ -30,10 +30,9 @@ router.route("/comment")
 		/** 댓글 수정 */
 		.patch(commentValidator, async (req, res, next) => {
 			const result = await board.data(req.body).updateComment();
-			if (result) { // 댓글 수정 성공 -> 새로고침
+			if (result) { // 댓글 수정 성공 -> 새로고침 
 				return reload(res, "parent");
 			}
-			
 			
 			return alert("댓글 수정 실패하였습니다.", res);
 		});

@@ -51,3 +51,4 @@
 .board_default .comment_wrap .top_box:after { clear: both; content: ''; display: block; }
 .board_default .comment_wrap .comment { margin-bottom: 10px; }
 .board_default .comment_wrap .btns { text-align: right; }
+.board_default.comment_form textarea { width: 100% border: 1px solid #d5d5d5; height: 160px; resize: none; padding: 10px; border-radius: 5px; margin-top: 10px; }

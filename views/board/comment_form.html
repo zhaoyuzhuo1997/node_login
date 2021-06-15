@@ -1,0 +1,6 @@
+<!-- 댓글 수정 양식 -->
+<form method='post' action='/board/comment?_method=PATCH' target='ifrmHidden' autocomplete='off'>
+<input type='hidden' name='idx' value='{{ idx }}'>
+<div class='popup_tit'>댓글 수정</div>
+{% include config.skinPath.commentForm %}
+</form>

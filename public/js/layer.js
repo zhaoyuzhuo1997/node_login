@@ -18,11 +18,9 @@ const layer = {
 		if ($("#layer_popup").length == 0) {
 			$("body").append("<div id='layer_popup'></div>");
 		}
-		
-		$layerDim = $("#layer_dim");
-		$popup = $("#layer_popup");
-		
-		$layerDim.css({
+
+		 
+		$("#layer_dim").css({
 			position: "fixed",
 			width : "100%",
 			height : "100%",
@@ -35,7 +33,7 @@ const layer = {
 		const xpos = Math.round(($(window).width() - width) / 2);
 		const ypos = Math.round(($(window).height() - height) / 2);
 		
-		$popup.css({
+		$("#layer_popup").css({
 			position : "fixed",
 			width : width + "px",
 			height : height + "px",
@@ -49,7 +47,7 @@ const layer = {
 		
 		axios.get(url)
 			.then(function(response) {
-				$popup.html(response.data);
+				 $("#layer_popup").html(response.data);
 			})
 			.catch(function (error) {
 				console.error(error);

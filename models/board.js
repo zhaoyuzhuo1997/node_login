@@ -450,6 +450,48 @@ const board = {
 		}
 	},
 	/**
+	* 댓글 수정 
+	*
+	* @return Boolean
+	*/
+	updateComment : async function() {
+		try {
+			const data = await this.getComment(this.params.idx);
+			if (!data.idx) {
+				throw new Error('댓글이 존재하지 않습니다.');
+			}
+			
+			let hash = "";
+			if (!data.memNo && this.params.password) {
+				hash = await bcrypt.hash(this.params.password, 10);
+			}
+			
+			const sql = `UPDATE boardcomment
+									SET 
+										poster = :poster,
+										password = :password,
+										comment = :comment
+								WHERE 
+										idx = :idx`;
+			
+			const replacements = {
+				poster : this.params.poster,
+				password : hash,
+				comment : this.params.comment,
+				idx : this.params.idx,
+			};
+			await sequelize.query(sql, {
+				replacements, 
+				type : QueryTypes.UPDATE,
+			});
+			
+			return true;
+		} catch (err) {
+			logger(err.stack, 'error');
+			return false;
+		}
+	},
+	/**
 	* 게시글별 댓글 목록 
 	*
 	* @param Integer idxBoard 게시글 번호 
@@ -476,7 +518,36 @@ const board = {
 			logger(err.stack, 'error');
 			return [];
 		}
+	},
+	/**
+	* 댓글 조회 
+	* 
+	* @param Integer idx 댓글 등록번호
+	* @return Object
+	*/
+	getComment : async function(idx) {
+		try {
+			const sql = `SELECT a.*, b.memNm, b.memId, c.boardId FROM boardcomment AS a 
+									INNER JOIN boarddata as c ON a.idxBoard = c.idx 
+									LEFT JOIN member AS b ON a.memNo = b.memNo 
+								WHERE a.idx = ?`;
+			const rows = await sequelize.query(sql, {
+				replacements : [idx],
+				type : QueryTypes.SELECT,
+			});
+			
+			const data = rows[0] || {};
+			if (data.idx) {
+				data.config = await this.getBoard(data.boardId);
+			}
+			console.log(data);
+			return data;
+		} catch(err) {
+			logger(err.stack, 'error');
+			return {};
+		}
 	}
+	
 };
 
 module.exports = board;

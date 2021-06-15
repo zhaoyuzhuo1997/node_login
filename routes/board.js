@@ -5,7 +5,7 @@
 const board = require('../models/board');
 const { boardConfig } = require('../middlewares/board_config');
 const { writeValidator, permissionCheck, guestOnly, commentValidator } = require('../middlewares/board_validator');
-const { alert, go } = require('../lib/common');
+const { alert, go, reload } = require('../lib/common');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
@@ -28,13 +28,22 @@ router.route("/comment")
 			return alert("댓글 작성 실패하였습니다.", res);
 		})
 		/** 댓글 수정 */
-		.patch((req, res, next) => {
+		.patch(commentValidator, async (req, res, next) => {
+			const result = await board.data(req.body).updateComment();
+			if (result) { // 댓글 수정 성공 -> 새로고침
+				return reload(res, "parent");
+			}
 			
+			
+			return alert("댓글 수정 실패하였습니다.", res);
 		});
 
 /** 댓글 수정 양식 */
-router.get("/comment/:idx", (req, res, next) => {
-	return res.render("board/comment_form");
+router.get("/comment/:idx", async (req, res, next) => {
+	const idx = req.params.idx;
+	const data = await board.getComment(idx);
+	data.addCss = ["board"];
+	return res.render("board/comment_form", data);
 });
 
 /** 댓글 삭제 처리 */
@@ -245,7 +254,7 @@ router.route("/password/:idx")
 					const keyUrl = key + "_url";
 					req.session[key] = true;
 					if (req.session[keyUrl]) {
-						if (req.session[keyUrl].indexOf("delete")) { // 게시글 삭제인 경우 바로 삭제 -> 목록 이동 
+						if (req.session[keyUrl].indexOf("delete") != -1) { // 게시글 삭제인 경우 바로 삭제 -> 목록 이동 
 							await board.delete(idx);
 						} else {
 							return go(req.session[keyUrl], res, "parent");

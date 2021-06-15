@@ -1,4 +1,4 @@
-const { alert } = require("../lib/common");
+const { alert, go } = require("../lib/common");
 const logger = require('../lib/logger');
 const board = require('../models/board');
 /**
@@ -114,7 +114,14 @@ module.exports.permissionCheck = async (req, res, next) => {
 module.exports.guestOnly = async (req, res, next) => {
 	try {
 		const idx = req.params.idx || req.query.idx || req.body.idx;
-		const data = await board.get(idx);
+		
+		let data;
+		if (req.url.indexOf("comment") == -1) { // 게시글 
+			data = await board.get(idx);
+		} else { // 댓글 
+			data = await board.getComment(idx);
+		}
+		
 		if (!data.idx) {
 			throw new Error('게시글이 존재하지 않습니다.');
 		}
@@ -164,6 +171,49 @@ module.exports.commentValidator = async (req, res, next) => {
 			}
 		}
 		
+	} catch (err) {
+		logger(err.stack, 'error');
+		return alert(err.message, res);
+	}
+	
+	next();
+};
+
+
+/** 댓글 수정, 삭제 권한 체크 */
+module.exports.commentPermissionCheck = async (req, res, next) => {
+	try {
+		const idx = req.params.idx || req.query.idx || req.body.idx;
+		const data = await board.getComment(idx);
+		if (!idx) {
+			throw new Error('잘못된 접근입니다.');
+		}
+		
+		if (!data.idx) {
+			throw new Error('댓글이 존재하지 않습니다.');
+		}
+		
+		/** 회원 댓글 memNo와 회원 memNo가 일치 여부 체크 */
+		if (data.memNo) {
+			if (data.memNo != req.session.memNo) {
+				let msg = "";
+				if (req.url.indexOf('delete') != -1) { // 삭제 처리
+					msg = "삭제";
+				} else { // 수정 처리 
+					msg = "수정";
+				}
+				msg += " 권한이 없습니다.";
+				throw new Error(msg);
+			}
+		} else { // 비회원
+			// 비밀번호 확인 
+			const key = `comment_${idx}`;
+			const keyUrl = key + "_url";
+			if (!req.session[key]) {
+				req.session[keyUrl] = req.url;
+				return go("/board/comment/password/" + idx, res, "parent");
+			}
+		}
 	} catch (err) {
 		logger(err.stack, 'error');
 		return alert(err.message, res);

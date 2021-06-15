@@ -307,7 +307,7 @@ const board = {
 	* @param Integer idx 게시글 번호 
 	* @return Object
 	*/
-	get : async function(idx) {
+	get : async function(idx, req) {
 		try {
 			const sql = `SELECT a.*, b.memId, b.memNm FROM boarddata AS a 
 										LEFT JOIN member AS b ON a.memNo = b.memNo 
@@ -326,6 +326,11 @@ const board = {
 				data.config = await this.getBoard(data.boardId);
 				const date = parseDate(data.regDt);
 				data.regDt = date.datetime;
+				
+				data.isWritable = data.isDeletable = true;
+				if (req && req.isLogin && req.session.memNo != data.memNo) {
+					data.isWritable = data.isDeletable = false;
+				}
 			}
 			
 			return data;
@@ -497,7 +502,7 @@ const board = {
 	* @param Integer idxBoard 게시글 번호 
 	* @return Array
 	*/
-	getComments : async function(idxBoard) {
+	getComments : async function(idxBoard, req) {
 		try {
 			const sql = `SELECT a.*, b.memNm, b.memId FROM boardcomment AS a 
 									LEFT JOIN member AS b ON a.memNo = b.memNo 
@@ -511,6 +516,11 @@ const board = {
 			rows.forEach((v, i, _rows) => {
 				_rows[i].regDt = parseDate(v.regDt).datetime;
 				_rows[i].commentHtml = v.comment.replace(/\r\n/g, "<br>");
+				
+				_rows[i].isWriable = _rows[i].isDeletable = true;
+				if (req && req.isLogin && req.session.memNo != v.memNo) {
+					_rows[i].isWriable = _rows[i].isDeletable  = false;
+				}
 			});
 			
 			return rows;
@@ -540,14 +550,33 @@ const board = {
 			if (data.idx) {
 				data.config = await this.getBoard(data.boardId);
 			}
-			console.log(data);
+					
 			return data;
 		} catch(err) {
 			logger(err.stack, 'error');
 			return {};
 		}
-	}
-	
+	},
+	/**
+	* 댓글 삭제 
+	*
+	* @param Integer idx 댓글 등록번호
+	* @return Boolean 
+	*/
+	deleteComment : async function(idx) {
+		try {
+			const sql = 'DELETE FROM boardcomment WHERE idx = ?';
+			await sequelize.query(sql, {
+				replacements : [idx],
+				type : QueryTypes.DELETE,
+			});
+			
+			return true;
+		} catch(err) {
+			logger(err.stack, 'error');
+			return false;
+		}
+	},
 };
 
 module.exports = board;

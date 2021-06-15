@@ -11,8 +11,12 @@
 	</div>
 	<div class='btns'>
 		<a href='/board/{{ id }}' class='btn1'>글 쓰기</a>
+		{% if isWritable %}
 		<a href='/board/update/{{ idx }}' class='btn1'>글 수정</a>
+		{% endif %}
+		{% if isDeletable %}
 		<span class='btn1 post_delete' data-idx='{{ idx }}'>글 삭제</span>
+		{% endif %}
 		<a href='/board/list/{{ id }}' class='btn1'>글 목록</a>
 	</div>
 </div>

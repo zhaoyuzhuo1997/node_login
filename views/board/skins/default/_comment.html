@@ -1,3 +1,4 @@
+  
 <div class='board_default comment'>
 	<form method='post' action='/board/comment' target='ifrmHidden' autocomplete='off'>
 		<input type='hidden' name='idxBoard' value='{{ idx }}'>
@@ -23,8 +24,12 @@
 			</div>
 			<div class='comment'>{{ item.commentHtml | safe }}</div>
 			<div class='btns'>
+				{% if item.isWritable %}
 				<span class='btn2 update'>수정</span>
+				{% endif %}
+				{% if item.isDeletable %}
 				<a href='/board/comment/delete/{{ item.idx }}' class='btn2' onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+				{% endif %}
 			</div>
 		</li>
 	{% endfor %}
@@ -33,3 +38,14 @@
 	{% endif %}
 </div>
 <!--// comment_box -->
+
+{% if idx_comment %}
+<script> 
+$(function() {
+	setTimeout(function() {
+	const url = "/board/comment/{{ idx_comment }}";
+	layer.popup(url, 450, 450);
+	}, 1000);
+});
+</script>
+{% endif %}

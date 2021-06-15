@@ -99,6 +99,7 @@ const board = {
 					form : skinPath + "/_form.html",
 					view : skinPath + "/_view.html",
 					comment : skinPath + "/_comment.html",
+					commentForm : skinPath + "/_comment_form.html",
 				};
 			}
 			
@@ -414,22 +415,23 @@ const board = {
 		return result;
 	},
 	/**
-	* 댓글 작성
+	* 댓글 작성 
 	*
-	* @return Interger|Boolean 작성 성공시 -> 등록번호(idx), 작성 실패시에는 false
+	* @return Integer|Boolean 작성 성공시 -> 등록번호(idx), 실패시에는 false
 	*/
 	writeComment : async function() {
 		try {
 			const memNo = this.session.memNo || 0;
 			let hash = "";
-			if (memNo && this.params.password) {
+			if (!memNo && this.params.password) {
 				hash = await bcrypt.hash(this.params.password, 10);
 			}
 			
 			const sql = `INSERT INTO boardcomment (idxBoard, memNo, poster, password, comment)
-								VALUES (:idxBoard, :memNo, :poster, :password, :comment)`;
+									VALUES (:idxBoard, :memNo, :poster, :password, :comment)`;
+			
 			const replacements = {
-				idxBoard: this.params.idxBoard,
+				idxBoard : this.params.idxBoard,
 				memNo,
 				poster : this.params.poster,
 				password : hash,
@@ -447,7 +449,34 @@ const board = {
 			return false;
 		}
 	},
-	
+	/**
+	* 게시글별 댓글 목록 
+	*
+	* @param Integer idxBoard 게시글 번호 
+	* @return Array
+	*/
+	getComments : async function(idxBoard) {
+		try {
+			const sql = `SELECT a.*, b.memNm, b.memId FROM boardcomment AS a 
+									LEFT JOIN member AS b ON a.memNo = b.memNo 
+								WHERE idxBoard = ?`;
+			
+			const rows = await sequelize.query(sql, {
+				replacements : [idxBoard],
+				type : QueryTypes.SELECT,
+			});
+			
+			rows.forEach((v, i, _rows) => {
+				_rows[i].regDt = parseDate(v.regDt).datetime;
+				_rows[i].commentHtml = v.comment.replace(/\r\n/g, "<br>");
+			});
+			
+			return rows;
+		} catch (err) {
+			logger(err.stack, 'error');
+			return [];
+		}
+	}
 };
 
 module.exports = board;

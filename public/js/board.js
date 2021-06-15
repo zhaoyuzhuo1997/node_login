@@ -28,4 +28,15 @@ $(function() {
 					console.error(err);
 				});
 	});
+	
+	/** 댓글 수정 */
+	$(".comment_list .update").click(function() {
+		const idx = $(this).closest("li").data("idx");
+		if (!idx) {
+			return;
+		}
+		
+		const url = "/board/comment/" + idx;
+		layer.popup(url, 450, 450);
+	});
 });

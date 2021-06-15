@@ -10,29 +10,39 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-/** 댓글 */
-router.route('/comment')
-	/** 댓글 작성 처리*/
-	.post(commentValidator, async (req, res, next) => {
-		const result = await board
-										.data(req.body, req.session)
-										.writeComment();
-		if (idx) { // 댓글 작성 성공
-			const url = `/board/view/${req.body.idxBoard}/#comment_${idx}`;
-			return go(url, res, "parent");
-		}
-		
-		// 댓글 작성 실패
-		return alert("댓글 작성 실패하였습니다.", res);
-	})
-	/** 댓글 수정 */
-	.patch((req, res, next) => {
-		
-	})
-	/** 댓글 삭제 */
-	.delete((req, res, next) => {
-		
-	});
+
+/** 댓글  */
+router.route("/comment")
+		/** 댓글 작성 처리 */
+		.post(commentValidator, async (req, res, next) => {
+			const idx = await board
+											.data(req.body, req.session)
+											.writeComment();
+			
+			if (idx) { // 댓글 작성 성공 
+				const url = `/board/view/${req.body.idxBoard}/#comment_${idx}`;
+				return go(url, res, "parent");
+			}
+			
+			// 댓글 작성 실패
+			return alert("댓글 작성 실패하였습니다.", res);
+		})
+		/** 댓글 수정 */
+		.patch((req, res, next) => {
+			
+		});
+
+/** 댓글 수정 양식 */
+router.get("/comment/:idx", (req, res, next) => {
+	return res.render("board/comment_form");
+});
+
+/** 댓글 삭제 처리 */
+router.get("/comment/delete/:idx", (req, res, next) => {
+	
+	return res.send("");
+});	
+
 
 /** 게시글 작성(양식, DB 처리), 수정, 삭제  - /board */
 router.route('/:id')
@@ -109,14 +119,15 @@ router.get("/list/:id", boardConfig, async (req, res, next) => {
 	}
 	/** 검색 처리 E */
 	
-	const rowsPerPage = req.boardConfig.rowsperPage || 20;
+	const rowsPerPage = req.boardConfig.rowsPerPage || 20;
 	const data = await board
 								.addWhere(where)
 								.getList(id, req.query.page, rowsPerPage, req.query);
-				
+								
 	data.config = req.boardConfig;
 	data.addCss = ['board'];
 	data.category = category;
+	
 	return res.render('board/list', data);
 });	
 
@@ -124,8 +135,8 @@ router.get("/list/:id", boardConfig, async (req, res, next) => {
 /** 게시글 보기 */
 router.get("/view/:idx", async (req, res, next) => {
 	let data;
+	const idx = req.params.idx;
 	try {
-		const idx = req.params.idx;
 		if (!idx) {
 			throw new Error('잘못된 접근입니다');
 		}
@@ -142,9 +153,10 @@ router.get("/view/:idx", async (req, res, next) => {
 	data.addCss = ["board"];
 	data.addScript = ["board"];
 	
-	// 게시글 보기 하단에 게시글 목록 노출
+	// 게시글 보기 하단에 게시글 목록 노출 
 	if (data.config.useViewList) {
 		const rowsPerPage = data.config.rowsPerPage || 20;
+		
 		/** 검색 처리 S */
 		const where = {
 			binds : [],
@@ -157,6 +169,7 @@ router.get("/view/:idx", async (req, res, next) => {
 			category = where.params.category = data.category;
 		}
 		/** 검색 처리 E */
+		
 		const boardList = await board
 										.addWhere(where)
 										.getList(data.boardId, req.query.page, rowsPerPage, req.query);
@@ -168,7 +181,7 @@ router.get("/view/:idx", async (req, res, next) => {
 	
 	/** 댓글 사용하는 경우 작성된 댓글 목록 조회 S */
 	if (data.config.useComment) {
-		const comments = await board.getComments(idx);
+		data.comments = await board.getComments(idx);
 	}
 	/** 댓글 사용하는 경우 작성된 댓글 목록 조회 E */
 	
@@ -248,6 +261,5 @@ router.route("/password/:idx")
 				return alert(err.message, res);
 			}
 		});
-		
-	
+
 module.exports = router;

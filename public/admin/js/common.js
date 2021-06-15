@@ -1,9 +1,10 @@
 $(function() {
-	/** 전체 선택 */
+	/** 전체 선택 S */
 	$(".check_all").click(function() {
-		cosnt target = $(this).data("target-name");
+		const target = $(this).data("target-name");
 		$(this).closest("form")
-					.find("input[name='" + target + "']")
-					.prop("checked", $(this).prop("checked"));
+				.find("input[name='" + target + "']")
+				.prop("checked", $(this).prop("checked"));
 	});
+	/** 전체 선택 E */
 });

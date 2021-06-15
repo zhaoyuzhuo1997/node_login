@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
 * { font-family: 'Nanum Gothic', sans-serif; box-sizing: border-box; outline: none; }
 html { font-size: 12px; color: #212121; }
+body { padding: 0; margin: 0; }
 ul { list-style: none; padding: 0; margin: 0; }
 a { text-decoration: none; color: #212121; }
 
@@ -8,9 +9,41 @@ dl { display: table; width: 100%; padding: 0; margin: 0; }
 dt { display: table-cell; width: 120px; vertical-align: middle; }
 dd { display: table-cell; vertical-align: middle; }
 
+input[type='text'], 
+input[type='number'],
+input[type='email'],
+input[type='password'],
+select { border: 1px solid #d5d5d5; height: 40px; width: 100%; border-radius: 5px; padding: 0 10px; }
+textarea { border: 1px solid #d5d5d5; min-height: 150px; resize: none; border-radius: 5px; padding: 10px; width: 100%; }
+
+
 /** 공통 */
 .table_cols { border-spacing: 0; padding: 0; width: 100%; }
-.table_cols th { width: 120px; background-color: #f8f8f8; border-bottom: 1px solid #d5d5d5; } 
-.table_cols td { border-bottom: 1px solid #d5d5d5; }
+.table_cols th { width: 120px; background-color: #f8f8f8; border-bottom: 1px solid #d5d5d5; padding: 7px 10px; } 
+.table_cols td { border-bottom: 1px solid #d5d5d5; padding: 7px 10px; }
 .table_cols tr:first-child th, .table_cols tr:first-child td { border-top: 1px solid #d5d5d5; }
 
+.table_rows { border-spacing: 0; padding: 0; width: 100%; }
+.table_rows thead th { background-color: #f8f8f8; padding: 10px; border: 1px solid #d5d5d5; border-left: 0; border-right: 0; }
+.table_rows tbody td { border-bottom: 1px solid #d5d5d5; padding: 10px; }
+
+/* 메인 제목 */
+.mtitle { font-size: 14px; font-weight: bold; margin-bottom: 15px; }
+
+/** 레이아웃 */
+#main_wrap { padding: 15px 10px; }
+
+
+/** 버튼 */
+.submit_btn { background-color: #212121; color: #ffffff; height: 45px; line-height: 45px; cursor: pointer; border-radius: 7px; width: 250px; margin: 20px auto; border: 0; display: block; }
+.btn1, .btn2 { display: inline-block; padding: 5px 15px; background-color: blue; color: #ffffff; border-radius: 5px; font-size: 11px; cursor: pointer; }
+.btn2 { background-color: red; }
+
+
+/** outline/header/_main.html */
+.main_menu { background-color: #d5d5d5; }
+.main_menu li { float: left; }
+.main_menu li a { display: block; padding: 13px 20px; font-size: 15px; font-weight: bold; }
+.main_menu:after { clear: left; content: ''; display: block; }
+.main_menu li a:hover,
+.main_menu li.on a { background-color: orange; }

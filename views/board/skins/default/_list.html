@@ -1,0 +1,28 @@
+<!-- Default 게시글 목록 -->
+<div class='board_default list'>
+	{% if config.categories.length > 0 %}
+	<div class='category_tab'>
+		<a href='/board/list/{{ config.id }}' class="tab{{ ' on' if not category }}">전체</a>
+		{% for item in config.categories %}
+			<a href='/board/list/{{ config.id }}?category={{ item }}' class='tab{% if category == item %} on{% endif %}'>{{ item }}</a>
+		{% endfor %}
+	</div>
+	{% endif %}
+	<a href='/board/{{ config.id }}' class='btn1 write_btn'>글쓰기</a>
+	<ul class='post_list'>
+	{% if list.length > 0 %} 
+		{% for item in list %}
+			<li>
+				<a href='/board/view/{{ item.idx }}' class='title'>{{ item.subject }}</a>
+				<div class='post_info'>
+					<span class='poster'>{{ item.poster }}{% if item.memNo > 0 %}({{ item.memId }}){% endif %}</span>
+					<span class='date'>{{ item.regDt }}</span>
+				</div>
+			</li>
+		{% endfor %}
+	{% else %}
+		<li class='no_post'>게시글이 없습니다.</li>
+	{% endif %}
+	</ul>
+</div>
+<!--// board_default -->

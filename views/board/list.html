@@ -1,0 +1,6 @@
+{% extends '../layout.html' %}
+{% block content %}
+<div class='board_nm'>{{ config.boardNm }}</div>
+{% include config.skinPath.list %}
+{{ pagination | safe }}
+{% endblock %}

@@ -12,7 +12,8 @@ module.exports.loginSession = async (req, res, next) => {
 			delete info.memPw;
 			if (info) {
 				req.isLogin = res.isLogin = res.locals.isLogin = true;
-				req.member = res.member = res.locals.member = info;
+				req.session.member = req.member = res.member = res.locals.member = info;
+				req.session.memNo = info.memNo;
 			}
 		} // endif 
 		

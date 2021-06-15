@@ -1,0 +1,15 @@
+<div class='comment'>
+	<form method='post' action='/board/comment' target='ifrmhidden' autocomplete='off'>
+		<div class='comment_info'>
+			작성자 : <input type='text' name='poster' value='{% if isLogin %}{{member.memNm }}{% endif %}'>
+			{% if not isLogin %}
+			/ 비밀번호 : <input type='password' name='password'>
+			{% endif %}
+		</div>
+		<div class='comment_form'>
+			<textarea id='comment' name='comment'></textarea>
+			<input type='submit' value='댓글작성' class='write_comment'>
+		</div>
+	</form>
+</div>
+<!--// comment_box -->

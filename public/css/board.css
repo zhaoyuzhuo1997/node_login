@@ -1,0 +1,38 @@
+/** 게시판 공통 */
+.board_nm { font-size: 17px; font-weight: bold; margin-bottom: 20px; }
+.no_post { text-align: center; padding: 100px 0; font-size: 16px; font-weight: bold; }
+.post_list_bottom { margin: 50px 0; }
+
+/** default category_tab */
+.board_default .category_tab { text-align: center; margin-bottom: 20px; }
+.board_default .category_tab .tab { padding:10px 20px; border: 1px solid #212121; margin: 0 3px; border-radius: 20px; font-weight: bold; }
+.board_default .category_tab .tab.on {  background-color: #212121; color: #ffffff; }
+
+/** default/_form.html */
+.board_default dl { margin-bottom: 5px; }
+.board_default dt { width: 120px; }
+
+
+/** default/_view.html */
+.board_default .subject { border: 1px solid #d5d5d5; padding: 10px; margin-bottom: 10px; } 
+.board_default .poster_info { border: 1px solid #d5d5d5; padding: 10px; margin-bottom: 10px; }
+.board_default .poster_info .date { float: left; }
+.board_default .poster_info .poster { float: right; }
+.board_default .poster_info:after { clear: both; content: ''; display: block; }
+.board_default.view .contents { border: 1px solid #d5d5d5; padding: 10px; min-height: 300px; }
+
+.board_default .btns { margin: 15px 0; }
+
+/** default/_list.html */
+.board_default .post_list > li { border-bottom: 1px solid #d5d5d5;  }
+.board_default .post_list > li:first-child { border-top: 1px solid #d5d5d5; }
+.board_default .post_list > li:nth-child(2n) { background-color: #f8f8f8; }
+.board_default .post_list > li .title { float: left; display: block; padding: 10px; width: calc(100% - 300px); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.board_default .post_list > li .post_info { float: right; padding: 10px; width: 300px; text-align: right; }
+.board_default .post_list > li:after { display: block; content: ''; clear: both; }
+
+.board_default.list { position: relative; }
+.board_default .write_btn { position: absolute; right: 0; top: -35px; }
+
+/** default/_comment.html */
+.board_default .comment_box {}

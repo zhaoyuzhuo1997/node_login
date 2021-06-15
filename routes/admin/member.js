@@ -1,6 +1,6 @@
 /** /admin/member */
 const { adminOnly } = require('../../middlewares/member_only');
-const express = express('express');
+const express = require('express');
 router = express.Router();
 
 // 관리자 접속 통제 

@@ -1,0 +1,10 @@
+{% extends '../layout.html' %}
+{% block content %}
+<div class='board_nm'>{{ config.boardNm }}</div>
+<form name='frmBoard' method='post' action="/board/{{ config.id }}{{ '?_method=PATCH' if idx }}" target='ifrmHidden' autocomplete='off'>
+{% if idx %}
+<input type='hidden' name='idx' value='{{ idx }}'>
+{% endif %}
+{% include config.skinPath.form %}
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+<div class='board_default view'>
+	<div class='subject'>{{ subject }}</div>
+	<div class='poster_info'>
+		<div class='date'>작성일 : {{ regDt }}</div>
+		<div class='poster'>
+			{{ poster }}({% if memId %}{{ memId }}{% else %}비회원{% endif %})
+		</div>
+	</div>
+	<div class='contents'>
+		{{ contents | safe }}
+	</div>
+	<div class='btns'>
+		<a href='/board/{{ id }}' class='btn1'>글 쓰기</a>
+		<a href='/board/update/{{ idx }}' class='btn1'>글 수정</a>
+		<span class='btn1 post_delete' data-idx='{{ idx }}'>글 삭제</span>
+		<a href='/board/list/{{ id }}' class='btn1'>글 목록</a>
+	</div>
+</div>
+<!--// board_default -->
+
+{% if config.useComment %}
+{% include config.skinPath.comment %}
+{% endif %}
+
+{% if list.length > 0 %}
+<div class='post_list_bottom'>
+{% include config.skinPath.list %}
+</div>
+{% endif %}

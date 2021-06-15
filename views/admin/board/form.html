@@ -1,0 +1,75 @@
+{% extends '../layout.html' %}
+{% block content %}
+<div class='mtitle'>게시판 설정하기({{ boardNm }} - {{ id }})</div>
+<form method='post' action='/admin/board?_method=PATCH' target='ifrmHidden'>
+	<input type='hidden' name='id' value='{{ id }}'>
+	<table class='table_cols'>
+		<tr>
+			<th>아이디</th>
+			<td>{{ id }}</td>
+		</tr>
+		<tr>
+			<th>게시판명</th>
+			<td>
+				<input type='text' name='boardNm' value='{{ boardNm }}'>
+			</td>
+		</tr>
+		<tr>
+			<th>분류</th>
+			<td>
+				<textarea name='category' placeholder='분류 여러개는 줄 개행하여 등록하세요'>{{ category }}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>접근제한</th>
+			<td>
+				<input type='radio' name='accessType' value='all' id='accessType_all'{% if accessType == 'all' %} checked{% endif %}>
+				<label for='accessType_all'>비회원+회원</label>
+				<input type='radio' name='accessType' value='member' id='accessType_member'{% if accessType == 'member' %} checked{% endif %}>
+				<label for='accessType_member'>회원전용</label>
+			</td>
+		</tr>
+		<tr>
+			<th>이미지업로드</th>
+			<td>
+				<input type='checkbox' name='useImageUpload' value='1' id='useImageUpload'{{ ' checked' if useImageUpload }}>
+				<label for='useImageUpload'>사용</label>
+			</td>
+		</tr>
+		<tr>
+			<th>파일업로드</th>
+			<td>
+				<input type='checkbox' name='useFileUpload' value='1' id='useFileUpload'{{ ' checked' if useFileUpload }}>
+				<label for='useFileUpload'>사용</label>
+			</td>
+		</tr>
+		<tr>
+			<th>페이지당 레코드수</th>
+			<td>
+				<input type='number' name='rowsPerPage' value='{{ rowsPerPage }}'>
+			</td>
+		</tr>
+		<tr>
+			<th>기타</th>
+			<td>
+				<input type='checkbox' name='useViewList' value='1' id='useViewList'{{ ' checked' if useViewList }}>
+				<label for='useViewList'>글 보기 하단 게시글 목록 노출</label>&nbsp;&nbsp;
+				<input type='checkbox' name='useComment' value='1' id='useComment'{{ ' checked' if useComment }}>
+				<label for='useComment'>댓글 사용</label>
+			</td>
+		</tr>
+		<tr>
+			<th>스킨</th>
+			<td>
+				<select name='skin'>
+					<option value=''>- 선택하세요 -</option>
+					{% for s in skins %}
+					<option value='{{ s }}'{% if s == skin %} selected{% endif %}>{{ s }}</option>
+					{% endfor %}
+				</select>
+			</td>
+		</tr>
+	</table>
+	<input type='submit' value='설정 저장하기' class='submit_btn'>
+</form>
+{% endblock %}

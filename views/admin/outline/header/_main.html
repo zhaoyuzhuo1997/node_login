@@ -1,12 +1,12 @@
 <!-- 관리자 페이지 메뉴 구성 -->
 <ul class='main_menu'>
-	<li>
+	<li class="menu{% if menuCode == 'main' %} on{% endif %}">
 		<a href='/admin'>관리자 메인</a>
 	</li>
-	<li>
+	<li class="menu{% if menuCode == 'member' %} on{% endif %}">
 		<a href='/admin/member'>회원관리</a>
 	</li>
-	<li>
+	<li class="menu{% if menuCode == 'board' %} on{% endif %}">
 		<a href='/admin/board'>게시판관리</a>
 	</li>
 </ul>

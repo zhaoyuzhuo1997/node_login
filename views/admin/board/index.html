@@ -46,5 +46,10 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	<div class='mt10'>
+	<input type='submit' value='선택 게시판 삭제하기' class='btn2' onclick="return confirm('정말 삭제하시겠습니까?');">
+	<input type='checkbox' name='delete_post' value='1' id='delete_post'>
+	<label for='delete_post'>게시글 포함 삭제</label>
+	</div>
 </form>
 {% endblock %}

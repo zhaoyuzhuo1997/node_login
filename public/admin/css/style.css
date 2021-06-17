@@ -16,6 +16,8 @@ input[type='password'],
 select { border: 1px solid #d5d5d5; height: 40px; width: 100%; border-radius: 5px; padding: 0 10px; }
 textarea { border: 1px solid #d5d5d5; min-height: 150px; resize: none; border-radius: 5px; padding: 10px; width: 100%; }
 
+/** 여백 */
+.mt10 { margin-top: 10px !important; }
 
 /** 공통 */
 .table_cols { border-spacing: 0; padding: 0; width: 100%; }
@@ -36,7 +38,7 @@ textarea { border: 1px solid #d5d5d5; min-height: 150px; resize: none; border-ra
 
 /** 버튼 */
 .submit_btn { background-color: #212121; color: #ffffff; height: 45px; line-height: 45px; cursor: pointer; border-radius: 7px; width: 250px; margin: 20px auto; border: 0; display: block; }
-.btn1, .btn2 { display: inline-block; padding: 5px 15px; background-color: blue; color: #ffffff; border-radius: 5px; font-size: 11px; cursor: pointer; }
+.btn1, .btn2 { display: inline-block; padding: 5px 15px; background-color: blue; color: #ffffff; border-radius: 5px; font-size: 11px; cursor: pointer; border: 0; }
 .btn2 { background-color: red; }
 
 

@@ -1,10 +1,11 @@
 const { sequelize, Sequelize : { QueryTypes } } = require("./index");
-const { parseDate } = require('../lib/common'); // 날짜 분해 
+const { parseDate, getBrowserId } = require('../lib/common'); // 날짜 분해 
 const logger = require("../lib/logger");
 const bcrypt = require('bcrypt');
 const fs = require('fs').promises;
 const path = require('path');
 const pagination = require('pagination');
+const fileUpload = require('./file_upload');
 
 /**
 * 게시판 Model
@@ -205,8 +206,8 @@ const board = {
 	*/
 	write : async function() {
 		try {
-			const sql = `INSERT INTO boarddata (boardId, category, memNo, poster, subject, contents, password) 
-										VALUES (:boardId, :category, :memNo, :poster, :subject, :contents, :password)`;
+			const sql = `INSERT INTO boarddata (gid, boardId, category, memNo, poster, subject, contents, password) 
+										VALUES (:gid, :boardId, :category, :memNo, :poster, :subject, :contents, :password)`;
 			
 			
 			const memNo = this.session.memNo || 0;
@@ -216,6 +217,7 @@ const board = {
 			}
 			
 			const replacements = {
+				gid : this.params.gid,
 				boardId : this.params.id,
 				category : this.params.category,
 				memNo,
@@ -224,7 +226,7 @@ const board = {
 				contents : this.params.contents,
 				password : hash,
 			};		
-
+			console.log(replacements);
 			const result = await sequelize.query(sql, {
 				replacements,
 				type : QueryTypes.INSERT,
@@ -327,12 +329,24 @@ const board = {
 				const date = parseDate(data.regDt);
 				data.regDt = date.datetime;
 				
-				data.isWritable = data.isDeletable = true;
-				if (req && req.isLogin && req.session.memNo != data.memNo) {
-					data.isWritable = data.isDeletable = false;
+				data.isWritable = data.isDeletable = false;
+				if (req && req.isLogin && data.memNo && req.session.memNo == data.memNo) { // 회원 게시글 
+					data.isWritable = data.isDeletable = true;
 				}
+				
+				if (!data.memNo) { // 비회원 게시글 
+					data.isWritable = data.isDeletable = true;
+				}
+				
+				/** 업로드된 파일 조회 */
+				const fileData = await fileUpload.gets(data.gid); // 그룹 아이디(gid)로 업로드된 파일 정보 조회 
+				data.editorFiles = fileData.editor || [];
+				data.attachedFiles = fileData.attached || [];
+				
+				/** 조회수 처리 */
+				data.viewCountStr = data.viewCount.toLocaleString();
 			}
-			
+
 			return data;
 		} catch (err) {
 			logger(err.stack, 'error');
@@ -404,10 +418,20 @@ const board = {
 			type : QueryTypes.SELECT,
 		});	
 		
-		list.forEach((v, i, _list) => {
+		list.forEach(async (v, i, _list) => {
+			/** new 아이콘 처리 */
+			const registerStamp = new Date(v.regDt).getTime();
+			const stamp = new Date().getTime() - (60 * 60 * 24 * 1000);
+			if (registerStamp > stamp) { // 현재 등록된 게시글이 하루 동안 작성된 경우 -> 새글 
+				_list[i].isNew = true;
+			}
+			
 			_list[i].regDt = parseDate(v.regDt).datetime;
+			
+			/** 조회수 처리 */
+			_list[i].viewCountStr = v.viewCount.toLocaleString();
 		});
-		
+		console.log(list);
 		const result = {
 			pagination : paginator.render(),
 			list,
@@ -416,7 +440,7 @@ const board = {
 			totalResult,
 			limit,
 		};
-
+		
 		return result;
 	},
 	/**
@@ -447,6 +471,9 @@ const board = {
 				replacements,
 				type : QueryTypes.INSERT,
 			});
+			
+			 // 게시글 댓글 갯수 업데이트 
+			await this.updateCommentCount(this.params.idxBoard); 
 			
 			return result[0];
 		} catch (err) {
@@ -490,6 +517,9 @@ const board = {
 				type : QueryTypes.UPDATE,
 			});
 			
+			 // 게시글 댓글 갯수 업데이트 
+			await this.updateCommentCount(data.idxBoard); 
+			
 			return true;
 		} catch (err) {
 			logger(err.stack, 'error');
@@ -517,9 +547,13 @@ const board = {
 				_rows[i].regDt = parseDate(v.regDt).datetime;
 				_rows[i].commentHtml = v.comment.replace(/\r\n/g, "<br>");
 				
-				_rows[i].isWriable = _rows[i].isDeletable = true;
-				if (req && req.isLogin && req.session.memNo != v.memNo) {
-					_rows[i].isWriable = _rows[i].isDeletable  = false;
+				_rows[i].isWritable = _rows[i].isDeletable = false;
+				if (req && req.isLogin && v.memNo && req.session.memNo == v.memNo) { // 회원 댓글일때 본인 댓글만 가능
+					_rows[i].isWritable = _rows[i].isDeletable  = true;
+				}
+				
+				if (!v.memNo) { // 비회원은 비밀번호 체크를 하기 위해 버튼 모두 노출
+					_rows[i].isWritable = _rows[i].isDeletable  = true;
 				}
 			});
 			
@@ -565,11 +599,16 @@ const board = {
 	*/
 	deleteComment : async function(idx) {
 		try {
+			const data = await board.getComment(idx);
+			
 			const sql = 'DELETE FROM boardcomment WHERE idx = ?';
 			await sequelize.query(sql, {
 				replacements : [idx],
 				type : QueryTypes.DELETE,
 			});
+			
+			// 게시글 댓글 갯수 업데이트 
+			await this.updateCommentCount(data.idxBoard); 
 			
 			return true;
 		} catch(err) {
@@ -577,6 +616,96 @@ const board = {
 			return false;
 		}
 	},
+	/**
+	* 댓글 갯수 
+	*
+	* @param Integer idx 게시글 번호 
+	* @return Integer 댓글 갯수 
+	*/
+	getCommentCount : async function(idx) {
+		try {
+			const sql = "SELECT COUNT(*) as cnt FROM boardcomment WHERE idxBoard = ?";
+			const rows = await sequelize.query(sql, {
+					replacements : [idx],
+					type : QueryTypes.SELECT,
+			});
+			return rows[0].cnt;
+		} catch (err) {
+			logger(err.stack, 'error');
+			return 0;
+		}
+	},
+	/**
+	* 게시글에 댓글 갯수를 업데이트 
+	*
+	* @param Integer idxBoard 게시글 번호
+	*/
+	updateCommentCount : async function (idxBoard) {
+		try {
+			const cnt = await this.getCommentCount(idxBoard);
+			const sql = `UPDATE boarddata 
+									SET commentCount = :commentCount 
+								WHERE 
+									idx = :idx`;
+			const replacements = {
+					commentCount : cnt,
+					idx : idxBoard,
+			};
+
+			await sequelize.query(sql, {
+				replacements,
+				type : QueryTypes.UPDATE,
+			});
+			
+		} catch (err) {
+			logger(err.stack, 'error');
+		}
+	},
+	/**
+	* 게시글 조회수 업데이트 
+	*
+	* @param Integer idx 게시글 번호
+	* @param Object req - request 객체 
+	*/
+	updateViewCount : async function (idx, req) {
+		/** boardview에 UV(Unique view) 추가 */
+		try {
+			if (!idx || !req) 
+				return;
+			
+			const browserId = getBrowserId(req);
+			const sql = 'INSERT INTO boardview VALUES (?, ?)';
+			await sequelize.query(sql, {
+				replacements : [browserId, idx],
+				type : QueryTypes.INSERT,
+			});
+		} catch (err) {}
+		
+		/** UV 데이터를 계산해서 조회수 업데이트 */
+		try {
+			let sql = "SELECT COUNT(*) as cnt FROM boardview WHERE idx = ?";
+			const rows = await sequelize.query(sql, {
+				replacements : [idx],
+				type : QueryTypes.SELECT,
+			});
+			
+			sql = `UPDATE boarddata 
+								SET 
+									viewCount = :viewCount
+							WHERE 
+								idx = :idx
+					`;
+			const replacements = {
+				viewCount : rows[0].cnt,
+				idx,
+			};
+			
+			await sequelize.query(sql, {
+				replacements,
+				type : QueryTypes.UPDATE,
+			});
+		} catch (err) {}
+	}
 };
 
 module.exports = board;

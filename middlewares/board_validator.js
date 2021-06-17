@@ -10,6 +10,7 @@ const board = require('../models/board');
 module.exports.writeValidator = async (req, res, next) => {
 	const required = {
 		id : '잘못된 접근입니다', 
+		gid : '잘못된 접근입니다',
 		subject : '제목을 입력해 주세요.',
 		poster : '작성자를 입력해 주세요.',
 		contents : '내용을 입력해 주세요.',
@@ -24,6 +25,7 @@ module.exports.writeValidator = async (req, res, next) => {
 		}
 		
 		required.idx = "잘못된 접근입니다.";
+		delete required.gid;
 	}
 	
 	if (req.method == "POST" && !req.isLogin) { // 비회원 게시글 등록 

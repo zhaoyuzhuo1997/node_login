@@ -1,0 +1,11 @@
+<!-- 파일 업로드 -->
+<div class='file_upload_form'>
+<div class='popup_tit'>파일 업로드</div>
+<form name='frmFileUpload' method='post' action='/file/upload/{{ gid }}' target='ifrmHidden' enctype='multipart/form-data' autocomplete='off'>
+	{% if mode %}
+	<input type='hidden' name='mode' value='{{ mode }}'>
+	{% endif %}
+	<input type='hidden' name='isAttached' value='{{ isAttached }}'>
+	<input type='file' name='file'>
+</form>
+</div>

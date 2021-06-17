@@ -13,10 +13,17 @@
 	{% if list.length > 0 %} 
 		{% for item in list %}
 			<li>
-				<a href='/board/view/{{ item.idx }}' class='title'>{{ item.subject }}</a>
+				<a href='/board/view/{{ item.idx }}' class='title'>
+					{{ item.subject }}
+					{% if item.commentCount %}({{ item.commentCount }}){% endif %}
+					{% if item.isNew %}<img src='/img/new.gif'>{% endif %}
+				</a>
 				<div class='post_info'>
 					<span class='poster'>{{ item.poster }}{% if item.memNo > 0 %}({{ item.memId }}){% endif %}</span>
 					<span class='date'>{{ item.regDt }}</span>
+					{% if item.viewCount > 0 %}
+					<span class='hit'>조회수 : {{ item.viewCountStr }}</span>
+					{% endif %}
 				</div>
 			</li>
 		{% endfor %}

@@ -3,6 +3,10 @@
 .no_post { text-align: center; padding: 100px 0; font-size: 16px; font-weight: bold; }
 .post_list_bottom { margin: 50px 0; }
 
+.file_box { border: 1px solid #d5d5d5; padding: 7px 15px; border-radius: 5px; }
+.file_box i { cursor: pointer; }
+.file_box a:hover { text-decoration: underline; }
+
 /** default category_tab */
 .board_default .category_tab { text-align: center; margin-bottom: 20px; }
 .board_default .category_tab .tab { padding:10px 20px; border: 1px solid #212121; margin: 0 3px; border-radius: 20px; font-weight: bold; }
@@ -16,12 +20,13 @@
 /** default/_view.html */
 .board_default .subject { border: 1px solid #d5d5d5; padding: 10px; margin-bottom: 10px; } 
 .board_default .poster_info { border: 1px solid #d5d5d5; padding: 10px; margin-bottom: 10px; }
-.board_default .poster_info .date { float: left; }
-.board_default .poster_info .poster { float: right; }
+.board_default .poster_info .date { float: right; }
+.board_default .poster_info .poster { float: left; }
 .board_default .poster_info:after { clear: both; content: ''; display: block; }
 .board_default.view .contents { border: 1px solid #d5d5d5; padding: 10px; min-height: 300px; }
 
 .board_default .btns { margin: 15px 0; }
+.board_default .attached_files li { border: 1px solid #d5d5d5; padding: 7px 10px; margin-top: 5px; font-size: 12px; background-color: #f8f8f8; }
 
 /** default/_list.html */
 .board_default .post_list > li { border-bottom: 1px solid #d5d5d5;  }

@@ -2,6 +2,7 @@
 {% block content %}
 <div class='board_nm'>{{ config.boardNm }}</div>
 <form name='frmBoard' method='post' action="/board/{{ config.id }}{{ '?_method=PATCH' if idx }}" target='ifrmHidden' autocomplete='off'>
+<input type='hidden' name='gid' value='{{ gid }}'>
 {% if idx %}
 <input type='hidden' name='idx' value='{{ idx }}'>
 {% endif %}

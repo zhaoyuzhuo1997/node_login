@@ -1,14 +1,29 @@
 <div class='board_default view'>
 	<div class='subject'>{{ subject }}</div>
 	<div class='poster_info'>
-		<div class='date'>작성일 : {{ regDt }}</div>
-		<div class='poster'>
+	<div class='poster'>
 			{{ poster }}({% if memId %}{{ memId }}{% else %}비회원{% endif %})
 		</div>
+		<div class='date'>
+			{% if viewCount > 0 %}조회수 : {{ viewCountStr }} / {% endif %}
+			작성일 : {{ regDt }}
+		</div>
+		
 	</div>
 	<div class='contents'>
 		{{ contents | safe }}
 	</div>
+	{% if attachedFiles.length > 0 %}
+	<ul class='attached_files'>
+		{% for item in attachedFiles %}
+		<li>
+			첨부파일 {{ loop.index }} : 
+			<a href='/file/download/{{ item.idx }}' target='ifrmHidden'>{{ item.fileName }}</a>
+		</li>	
+		{% endfor %}
+	</ul>
+	{% endif %}
+	
 	<div class='btns'>
 		<a href='/board/{{ id }}' class='btn1'>글 쓰기</a>
 		{% if isWritable %}

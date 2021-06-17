@@ -33,6 +33,44 @@
 	</dl>
 	{% endif %}
 	<textarea name='contents' id='contents'>{{ contents | safe }}</textarea>
+	{% if config.useImageUpload %}
+	<dl class='mt15'>
+		<dt>이미지</dt>
+		<dd>
+			<span class='btn2 upload_image'>이미지 추가</span>
+			<span class='uploaded_images'>
+			{% if editorFiles.length > 0 %}
+			{% for item in editorFiles %}
+				<span class='file_box' data-idx='{{ item.idx }}' data-url='{{ item.fileUrl }}'>
+					<a href='/file/download/{{ item.idx }}' target='ifrmHidden'>{{ item.fileName }}</a>
+					<i class='remove xi-file-remove'></i>
+					<i class='addContents xi-upload'></i>
+				</span> 
+			{% endfor %}
+			{% endif %}
+			</span>
+		</dd>
+	</dl>
+	{% endif %}
+	{% if config.useFileUpload %}
+	<dl class='mt20'>
+		<dt>파일첨부</dt>
+		<dd>
+			<span class='btn2 upload_file'>파일 첨부</span>
+			<span class='uploaded_files'>
+			{% if attachedFiles.length > 0 %}
+			{% for item in attachedFiles %}
+				<span class='file_box' data-idx='{{ item.idx }}' data-url='{{ item.fileUrl }}'>
+					<a href='/file/download/{{ item.idx }}' target='ifrmHidden'>{{ item.fileName }}</a>
+					<i class='remove xi-file-remove'></i>
+				</span> 
+			{% endfor %}
+			{% endif %}
+			</span>
+		</dd>
+	</dl>
+	{% endif %}
+	
 	<input type='submit' value="{{ '수정' if idx else '작성' }}하기" class='submit_btn'>
 </div>
 <!--// board_default -->

@@ -16,6 +16,11 @@ a { text-decoration: none; color: #212121; }
 
 #main_wrap { padding: 10px; }
 
+/** 여백 */
+.mt10 { margin-top: 10px !important; }
+.mt15 { margin-top: 15px !important; }
+.mt20 { margin-top: 20px !important; }
+
 /** 버튼 공통 */
 .submit_btn { background-color: blue; color: #ffffff; height: 45px; width: 250px; display: block; margin: 20px auto; border: 0; border-radius: 7px; cursor: pointer; }
 

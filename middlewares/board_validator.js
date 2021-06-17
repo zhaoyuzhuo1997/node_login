@@ -223,3 +223,14 @@ module.exports.commentPermissionCheck = async (req, res, next) => {
 	
 	next();
 };
+
+/**
+* 게시판, 댓글 회원 전용 체크 
+*
+*/
+module.exports.memberOnlyCheck = (req, res, next) => {
+	if (req.boardConfig.accessType == 'member' && !req.isLogin) { // 회원전용 게시판에 미로그인 상태
+		return alert("회원 전용 게시판입니다.", res, -1);
+	}
+	next();
+};

@@ -7,6 +7,8 @@
 .file_box i { cursor: pointer; }
 .file_box a:hover { text-decoration: underline; }
 
+.member_only_comment { text-align: center; color: red; padding: 30px 0; font-size: 14px; font-weight: bold; }
+
 /** default category_tab */
 .board_default .category_tab { text-align: center; margin-bottom: 20px; }
 .board_default .category_tab .tab { padding:10px 20px; border: 1px solid #212121; margin: 0 3px; border-radius: 20px; font-weight: bold; }
@@ -39,6 +41,10 @@
 .board_default.list { position: relative; }
 .board_default .write_btn { position: absolute; right: 0; top: -35px; }
 
+.board_default .post_search { background-color: #f8f8f8; border-bottom: 1px solid #d5d5d5; padding:10px; text-align: right; }
+.board_default .post_search select { width: 120px; height: 30px; }
+.board_default .post_search input[type='text'] { width: 200px; height: 30px; }
+.board_default .post_search .search_btn { background-color: #000000; color: #ffffff; border: 0; cursor: pointer; height: 20px; padding: 0 20px; border-radius: 3px; }
 
 /** default/_comment.html */
 .board_default.comment { border: 1px solid #d5d5d5; padding: 10px; }

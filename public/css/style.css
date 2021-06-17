@@ -34,3 +34,11 @@ a { text-decoration: none; color: #212121; }
 
 /** 팝업 공통 */
 .popup_tit { font-size: 17px; font-weight: bold; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 1px solid #212121; }
+
+/** outline/header/_main.html */
+header .logo_search .logo { float: left; }
+header .logo_search .search { float: right; width: 250px; }
+header .logo_search:after { clear: both; content: ''; display: block; }
+header .logo_search .search input[type='text'] { width: calc(100% - 60px); float: left; border: 3px solid #000000; border-radius: 0; }
+header .logo_search .search_btn { width: 60px; display: block; float: right; height: 40px; background-color: #000000; color: #ffffff; border: 0; cursor: pointer; } 
+header .logo_search .search:after { clear: both; content: ''; display: block; }

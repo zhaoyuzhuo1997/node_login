@@ -65,3 +65,9 @@
 .board_default .comment_wrap .btns { text-align: right; }
 
 .board_default.comment_form textarea { width: 100%; border: 1px solid #d5d5d5; height: 160px; resize: none; padding: 10px; border-radius: 5px; margin-top: 10px; }
+
+/* board/search.html */
+.search_page .search { width: 450px; margin: 20px auto; }
+.search_page .search select { width: 120px; }
+.search_page .search input[type='text'] { width: calc(100% - 230px); }
+.search_page .search .search_btn { width: 100px; border: 0; background-color: #000000; color: #ffffff; border-radius: 3px; cursor: pointer; height: 40px; }

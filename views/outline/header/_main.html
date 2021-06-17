@@ -1,1 +1,13 @@
-<h1>상단 공통</h1>
+<div class='logo_search'>
+	<div class='logo'>
+		<a href='/'>로고</a>
+	</div>
+	<div class='search'>
+		<form method='get' action='/board/search' autocomplete='off'>
+			<input type='hidden' name='sopt' value='all'>
+			<input type='text' name='skey' value='{{ skey }}' placeholder='검색어 입력'>
+			<input type='submit' value='검색' class='search_btn'>
+		</form>
+	</div>
+<!--// search -->
+</div>

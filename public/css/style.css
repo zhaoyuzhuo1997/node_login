@@ -36,9 +36,25 @@ a { text-decoration: none; color: #212121; }
 .popup_tit { font-size: 17px; font-weight: bold; padding-bottom: 15px; margin-bottom: 20px; border-bottom: 1px solid #212121; }
 
 /** outline/header/_main.html */
-header .logo_search .logo { float: left; }
+header .top_mini_menu { background-color: #252525; height: 35px;}
+header .top_mini_menu_inner { width: 1106px; position: relative; margin: 0 auto; }
+header .mini_box_left { width: 192px; height: 33px; position: absolute; }
+header .min_box_left:after { clear: both; content: ''; display:block; }
+header .mini_box_left a { color: white;  font-size: 13.5px; letter-spacing: -1px;}
+header .mini_box_left .left_store { float: left; padding: 0 10px; line-height: 33px; }
+header .mini_box_left .left_Ins { float: right; padding: 0 10px; line-height: 33px; }
+header .mini_box_right { height: 35px; position: absolute; right : 0; top: 0; }
 header .logo_search .search { float: right; width: 250px; }
 header .logo_search:after { clear: both; content: ''; display: block; }
 header .logo_search .search input[type='text'] { width: calc(100% - 60px); float: left; border: 3px solid #000000; border-radius: 0; }
 header .logo_search .search_btn { width: 60px; display: block; float: right; height: 40px; background-color: #000000; color: #ffffff; border: 0; cursor: pointer; } 
 header .logo_search .search:after { clear: both; content: ''; display: block; }
+header .top_logo { background-color: #252525; height: 139px; position: relative;}
+header .top_logo:after { clear: both; content: ''; display: block; }
+header .top_logo_inner { width: 1106px; margin: 0 auto; position: relative; text-align: center;}
+header .top_logo_inner:after { clear: both; content: ''; display: block; }
+header .top_logo .logo { vertical-align: middle;}
+header .main_menu_wrap { width: 1106px; margin: 0 auto; }
+header .main_menu_wrap .main_menu { width: 100%; position: relative; }
+header .mian_menu_wrap .main_menu:after { clear: both; content: ''; display: block; }
+header .main_menu_wrap .menu_category { width: calc(100%  / 4  - 269); float: left; position: absolute;}

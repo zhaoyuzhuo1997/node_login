@@ -1,13 +1,50 @@
-<div class='logo_search'>
-	<div class='logo'>
-		<a href='/'>로고</a>
+<div class="top_mini_menu">
+	<div class="top_mini_menu_inner">
+		<div class="mini_box_left">
+			<a href="/" class="left_store">
+				<i class="xi-cart-o">풋셀스토어</i>
+			</a>
+			<a href="/" class="left_Ins">
+				<i class="xi-instagram">인스타그램</i>
+			</a>
+		</div>
+		<div class="mini_box_right">
+			<div class='logo_search'>
+				<div class='search'>
+					<form method='get' action='/board/search' autocomplete='off'>
+						<input type='hidden' name='sopt' value='all'>
+						<input type='text' name='skey' value='{{ skey }}'>
+						<input type='submit' value='' class='search_btn'>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class='search'>
-		<form method='get' action='/board/search' autocomplete='off'>
-			<input type='hidden' name='sopt' value='all'>
-			<input type='text' name='skey' value='{{ skey }}' placeholder='검색어 입력'>
-			<input type='submit' value='검색' class='search_btn'>
-		</form>
+	<!--// search -->
+</div>
+<div class='top_logo'>
+	<div class='top_logo_inner'>
+		<div class='logo'>
+				<a href='/'><img src="/img/logo.png" height='104'></a>
+		</div>
 	</div>
-<!--// search -->
+</div>
+<!--// logo -->
+<div class="main_menu_wrap">
+	<div class="main_menu">
+		<div class="menu_category">
+			<div class="menu_shoes">
+				스니커
+			</div>
+			<div class="menu_community">
+				커뮤니티
+			</div>
+			<div class="menu_gallary">
+				갤러리
+			</div>
+			<div class="menu_market">
+				마켓
+			</div>
+		</div>
+	</div>
 </div>

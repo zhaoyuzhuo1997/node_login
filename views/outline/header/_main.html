@@ -14,13 +14,22 @@
 					<form method='get' action='/board/search' autocomplete='off'>
 						<input type='hidden' name='sopt' value='all'>
 						<input type='text' name='skey' value='{{ skey }}'>
-						<input type='submit' value='' class='search_btn'>
+						<label><input type='submit' value='' class='search_btn'><i class='xi-search'></i></label>
+					</form>
+				</div>
+			</div>
+			
+			<div class="main_login">
+				<div class="login_btn_wrap">
+					<form action='/'>
+						<input type="button" value='' class='login_btn'>
+						<span><i class='xi-power-off'></i></span>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!--// search -->
+	<!--// search, login-->
 </div>
 <div class='top_logo'>
 	<div class='top_logo_inner'>
@@ -30,20 +39,56 @@
 	</div>
 </div>
 <!--// logo -->
-<div class="main_menu_wrap">
-	<div class="main_menu">
+<div class="top_menu">
+	<div class="menu_bar">
 		<div class="menu_category">
-			<div class="menu_shoes">
-				스니커
+			<div class='tab'>
+				<div class="category_bar">스니커</div>
+				<div class="category_bar_a">
+					<th>
+						<tr><a href='/'>스니커뉴스</a></tr>
+						<tr><a href='/'>조던뉴스</a></tr>
+						<tr><a href='/'>위키</a></tr>
+						<tr><a href='/'>리뷰</a></tr>
+					</th>
+				</div>
 			</div>
-			<div class="menu_community">
-				커뮤니티
+			
+			<div class='tab'>
+				<div class="category_bar">커뮤니티</div>
+				<div class="category_bar_a">
+					<th>
+						<tr><a href='/'>스니커톡</a></tr>
+						<tr><a href='/'>패션톡</a></tr>
+						<tr><a href='/'>Q&amp;A</a></tr>
+						<tr><a href='/'>핫딜톡</a></tr>
+						<tr><a href='/'>프리톡</a></tr>
+					</th>
+				</div>
 			</div>
-			<div class="menu_gallary">
-				갤러리
+			
+			<div class='tab'>
+				<div class="category_bar">갤러리</div>
+				<div class="category_bar_a">
+					<th>
+						<tr><a href='/'>착갤</a></tr>
+						<tr><a href='/'>염갤</a></tr>
+						<tr><a href='/'>셀럽</a></tr>
+						<tr><a href='/'>자갤</a></tr>
+						<tr><a href='/'>릴레이</a></tr>
+					</th>
+				</div>
 			</div>
-			<div class="menu_market">
-				마켓
+			
+			<div class='tab'>
+				<div class="category_bar">마켓</div>
+				<div class="category_bar_a">
+					<th>
+						<tr><a href='/'>스니커마켓</a></tr>
+						<tr><a href='/'>패션마켓</a></tr>
+						<tr><a href='/'>BUY</a></tr>
+					</th>
+				</div>
 			</div>
 		</div>
 	</div>

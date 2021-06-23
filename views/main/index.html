@@ -1,1 +1,23 @@
 {% extends '../layout.html' %}
+{% block content %}
+
+<!--// top_menu -->
+<div class="top_banner_wrap">
+	<div class="top_banner">
+		<a href='/'>
+			<img style="width: 100%" src="/img/banner.jpg">
+		</a>
+	</div>
+</div>
+<!--// main_banner -->
+
+
+{% if isLogin %}
+<a href='/mypage/myinfo'>회원정보 수정</a>
+{% endif %}
+
+
+
+{% include 'main/_latest_photo.html' %}
+
+{% endblock %}

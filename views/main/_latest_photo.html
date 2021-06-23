@@ -1,0 +1,17 @@
+<!-- 최신 이미지 게시글 -->
+{% if photoList.length > 0 %}
+<ul>
+	{% for item in photoList %}
+	<li>
+		<a href='/board/view/{{ item.idx }}'>
+			<img src='{{ item.listImage }}'>
+			<div class='title'>{{ item.subject }}</div>
+		</a>
+		
+		<span class='poster'>{{ item.poster }}</span>
+		<span class='date'>{{ item.regDtS }}</span>
+		<span class='hit'>{{ item.hit }}</span>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}

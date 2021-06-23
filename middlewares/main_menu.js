@@ -3,12 +3,14 @@
 * 
 */
 module.exports.mainMenu = function(req, res, next) {
+	/*
 	res.locals.mainMenu = [
-		{name : '메뉴1', url : '/url1'},
-		{name : '메뉴2', url : '/url2'},
-		{name : '메뉴3', url : '/url3'},
-		{name : '메뉴4', url : '/url4'},
+		{name : '스니커', url : '/url1'},
+		{name : '커뮤니티', url : '/url2'},
+		{name : '갤러리', url : '/url3'},
+		{name : '마켓', url : '/url4'},
+		{name : '풋셀스토어', url : '/url1'},
 	];
-	
+	*/
 	next();
 };

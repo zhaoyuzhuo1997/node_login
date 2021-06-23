@@ -112,4 +112,20 @@ router.get("/download/:idx", async (req, res, next) => {
 	}
 });
 
+/** 업로드된 이미지 보기 */
+router.get("/view/:idx", async (req, res, next) => {
+	try {
+		const idx = req.params.idx;
+		const data = await fileUpload.get(idx);
+		if (!data.idx) {
+			throw new Error('존재하지 않는 파일입니다.');
+		}
+		
+		return res.render("file/view", data);
+	} catch (err) {
+		return alert(err.message, res);
+	}
+});
+
+
 module.exports = router;

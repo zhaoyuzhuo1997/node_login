@@ -56,9 +56,9 @@ header .logo_search .search .search_btn { border: 0; text-align: center; backgro
 header .logo_search .search .xi-search { color: #ffffff; font-size: 16px; }
 
 
-header .mini_box_left { width: 192px; height: 33px; position: absolute; }
-header .mini_box_left a { color: white;  font-size: 13.5px; letter-spacing: -1px; }
-header .mini_box_left .left_store { float: left; padding: 0 10px; line-height: 33px; }
+header .mini_box_left { width: 193px; height: 33px; position: absolute; }
+header .mini_box_left a { color: white;  font-size: 13.5px; letter-spacing: -1px;}
+header .mini_box_left .left_store { float: left; padding: 0 10px; line-height: 33px;}
 header .mini_box_left .left_Ins { float: right; padding: 0 10px; line-height: 33px; }
 
 header .top_logo { background-color: #252525; height: 139px; position: relative;}
@@ -79,7 +79,7 @@ header .top_menu .menu_category:after { clear: left; content: ''; display: block
 header .top_menu .category_bar{ background-color: #000000; color: #dddddd; width: 269px; height: 21px; font-size: 13px; line-height: 150%; font-weight: bold; text-align: center; letter-spacing: -1px; }
 header .top_menu .category_bar_a { background-color: #ffffff; width: 269px; font-size: 15px; text-align: center;}
 header .top_menu .category_bar_a a { margin: 3.5px; }
-
+header .top_menu .category_bar_a a:hover { color: #e56424;}
 
 /** main_banner */
 main .top_banner:after { clear: both; content: ''; display: block; }
@@ -89,3 +89,17 @@ main .top_banner_wrap .top_bannar { width: 1106px; height: 276.5px; margin: 20px
 
 
 /** footer */
+footer .bottom { margin-top: 75px; text-align: center; font-size: 13.5px; line-height: 210%; height: 146.32px; }
+footer .bottom_top { background-color: white; height: 48px; position: relative; }
+footer .bottom .bottom_inner { width: 1106px; height: 48px; margin: 0 auto; padding: 10px 0; letter-spacing: -1px; }
+footer .bottom_inner .bottom_box { margin: 0 30px; position: relative; display: inline-block; }
+footer .bottom_inner .bottom_box:hover { color: #e56424;}
+
+footer .bottom_copyright:after { clear: both; content: ''; display: block; }
+footer .bottom_copyright { background-color: #232323; color: white;  height: 98.33px; position: relative;}
+footer .bottom_copyright_inner { margin: 0 auto; width: 1106px; }
+footer .bottom_copyright_inner .copyright_box1 { float: left; width: 315px; height: 33px; font-size:15.5px; margin-top: 30px; font-weight: 600;}
+footer .bottom_copyright_inner .copyright_box1 img { width:31%; margin: 0 -4px; vertical-align: middle;}
+
+footer .bottom_copyright .copyright_box2 { width: 167.42px; height: 28px; float: right; font-size:15.5px; margin-top: 33px; font-weight: 600;}
+footer .bottom_copyright .copyright_box2 a { color: #e56424;font-size: 18px; letter-spacing: -1.5px;}

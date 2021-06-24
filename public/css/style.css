@@ -57,7 +57,7 @@ header .logo_search .search .xi-search { color: #ffffff; font-size: 16px; }
 
 
 header .mini_box_left { width: 193px; height: 33px; position: absolute; }
-header .mini_box_left a { color: white;  font-size: 13.5px; letter-spacing: -1px;}
+header .mini_box_left a { color: white; font-size: 13.5px; letter-spacing: -1px;}
 header .mini_box_left .left_store { float: left; padding: 0 10px; line-height: 33px;}
 header .mini_box_left .left_Ins { float: right; padding: 0 10px; line-height: 33px; }
 

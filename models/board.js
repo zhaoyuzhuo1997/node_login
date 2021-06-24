@@ -207,8 +207,8 @@ const board = {
 	*/
 	write : async function() {
 		try {
-			const sql = `INSERT INTO boarddata (gid, boardId, category, memNo, poster, subject, contents, password, isImagePost ) 
-										VALUES (:gid, :boardId, :category, :memNo, :poster, :subject, :contents, :password, :isImagePost )`;
+			const sql = `INSERT INTO boarddata (gid, boardId, category, memNo, poster, subject, contents, password, isImagePost) 
+										VALUES (:gid, :boardId, :category, :memNo, :poster, :subject, :contents, :password, :isImagePost)`;
 			
 			
 			const memNo = this.session.memNo || 0;
@@ -217,7 +217,7 @@ const board = {
 				hash = await bcrypt.hash(this.params.password, 10);
 			}
 			
-			// 이미지 포함 게시글인지 체크
+			// 이미지 포함 게시글인지 체크 
 			let isImagePost = 0;
 			const pattern = /<img[^>]*src/igm;
 			if (pattern.test(this.params.contents)) {
@@ -240,7 +240,7 @@ const board = {
 				replacements,
 				type : QueryTypes.INSERT,
 			});
-			
+						
 			return result[0]; // 게시글 등록 번호(idx)
 		} catch (err) {
 			logger(err.stack, 'error');
@@ -260,13 +260,13 @@ const board = {
 				hash = await bcrypt.hash(this.params.password, 10);
 			}
 		
-		// 이미지 포함 게시글인지 체크
+			// 이미지 포함 게시글인지 체크 
 			let isImagePost = 0;
 			const pattern = /<img[^>]*src/igm;
 			if (pattern.test(this.params.contents)) {
 				isImagePost = 1;
 			}
-			
+		
 			const sql = `UPDATE boarddata 
 									SET 
 										category = :category,
@@ -799,12 +799,12 @@ const board = {
 	/**
 	* 최신글
 	*
-	* @param String boardId 게시판 아이디
+	* @param String boardId 게시판 아이디 
 	* @param String category 게시판 분류
-	* @param Integer limit 추출할 레코드 수, 기본값은 10개
-	* @param Boolean isImagePost true(이미지가 포함된 게시글), false - 전체
+	* @param Integer limit 추출할 레코드 수, 기본값은 10
+	* @param Boolean isImagePost - true(이미지가 포함된 게시글), false - 전체 
 	*
-	* return Array
+	* @return Array
 	*/
 	getLatest : async function(boardId, category, limit, isImagePost) {
 		try {
@@ -816,9 +816,9 @@ const board = {
 			
 			let addWhere = "";
 			const _addWhere = [];
-			const replacement = {
-				boardId,
-				limit,
+			const replacements = {
+					boardId,
+					limit,
 			};
 			
 			if (category) {
@@ -834,9 +834,9 @@ const board = {
 				addWhere = " AND " + _addWhere.join(" AND ");
 			}
 			
-			const sql =`SELECT a.*, b.memNm FROM boarddata AS 
-								LEFT JOIN member AS b ON a.memNo = b.memNo
-							WHERE boardID = :boardId${addWhere} LIMIT :limit ORDER BY a.regDt DESC`;
+			const sql = `SELECT a.*, b.memId, b.memNm FROM boarddata AS a 
+									LEFT JOIN member AS b ON a.memNo = b.memNo 
+								WHERE boardId = :boardId${addWhere} ORDER BY a.regDt DESC LIMIT :limit `;
 			
 			const list = await sequelize.query(sql, {
 				replacements,
@@ -846,11 +846,11 @@ const board = {
 			list.forEach((v, i, _list) => {
 				const date = parseDate(v.regDt);
 				_list[i].regDt = date.datetime;
-				_list[i].regDts = date.date;
+				_list[i].regDtS = date.date;
 				
 				const pattern = /<img[^>]*src=['"]?([^>'"]+)['"]?[^>]*>/igm;
 				const match = pattern.exec(v.contents);
-				if (match.length > 0) {
+				if (match && match.length > 0) {
 					_list[i].listImage = match[1];
 				} else {
 					_list[i].listImage = "/img/no_image.png";

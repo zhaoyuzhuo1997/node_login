@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 * { font-family: 'Nanum Gothic', sans-serif; box-sizing: border-box; outline: none; }
-html { color: white;  }
+html { color: black;  }
 body { padding: 0; margin: 0; }
 ul { list-style: none; padding: 0; margin: 0; }
 dl { display: table; width: 100%; padding: 0; margin: 0;}
@@ -40,23 +40,26 @@ body { background-color: #f9f9f9; }
 /** outline/header/_main.html */
 header { background-color:#252525; }
 header .top_mini_menu { height: 35px;}
+header .top_mini_menu_inner:after { clear: both; content: ''; display: block; }
 header .top_mini_menu_inner { width: 1106px; position: relative; margin: 0 auto; }
-header .mini_box_left { width: 192px; height: 33px; position: absolute; }
-header .min_box_left:after { clear: both; content: ''; display:block; }
-header .mini_box_left a { color: white;  font-size: 13.5px; letter-spacing: -1px; }
-header .mini_box_left .left_store { float: left; padding: 0 10px; line-height: 33px; }
-header .mini_box_left .left_Ins { float: right; padding: 0 10px; line-height: 33px; }
 
-header .mini_box_right:after { clear: both; content: ''; display: block;}
+header .mini_box_right:after { clear: both; content: ''; display: block; }
 header .mini_box_right { width: 296px; height: 35px; position: absolute; right : 0; top: 0; }
-header .logo_search { width: 136px; }
+header .main_login { width: 56px; height: 35px; background-color: #e56424; text-align: center;padding: 0 12px; float: right;}
+header .main_login .login_btn { background-color: #e56424; text-align: center; margin-top: 12px; border: 0; cursor: pointer;}
+/*header .main_login:hover { background-color: #888888; } */
+header .main_login .login_btn i { font-weight: 900;  line-height: 1px; color: white; font-size: 15px;}
+header .logo_search { width: 296px; height: 35px; }
 header .logo_search .search { float: left; width: 136px; padding: 0 8px; background-color: #444444; border-radius: 15px; height: 22px; line-height: 13px; margin-top: 7px; margin-right: 7px;}
-header .logo_search:after { clear: both; content: ''; display: block; }
 header .logo_search .search input[type='text'] { width: calc(100% - 30px); float: left;  border: 0; border-radius: 0; height: 22px;  background-color: #444444; }
 header .logo_search .search .search_btn { border: 0; text-align: center; background-color: #444444;}
 header .logo_search .search .xi-search { color: #ffffff; font-size: 16px; }
-header .logo_search .search:after { clear: both; content: ''; display: block; }
-header .top_mini_menu .main_login { width: 32px; height: 35px; background-color: #e56424; text-align: center; box-shadow: 0 0 5px; padding: 0 12px; float: right; position: absolute; display: block;}
+
+
+header .mini_box_left { width: 192px; height: 33px; position: absolute; }
+header .mini_box_left a { color: white;  font-size: 13.5px; letter-spacing: -1px; }
+header .mini_box_left .left_store { float: left; padding: 0 10px; line-height: 33px; }
+header .mini_box_left .left_Ins { float: right; padding: 0 10px; line-height: 33px; }
 
 header .top_logo { background-color: #252525; height: 139px; position: relative;}
 header .top_logo:after { clear: both; content: ''; display: block; }
@@ -78,9 +81,11 @@ header .top_menu .category_bar_a { background-color: #ffffff; width: 269px; font
 header .top_menu .category_bar_a a { margin: 3.5px; }
 
 
-/** main_banner **/
+/** main_banner */
 main .top_banner:after { clear: both; content: ''; display: block; }
 main .top_banner { width: 1106px; margin: 0 auto; margin-top: 10px; text-align: center;}
 main .top_banner_wrap .top_bannar { width: 1106px; height: 276.5px; margin: 20px auto - 30px; vertical-align: middle;}
-main .top_banner_wrap img:hover { transform: scale ( 1. 05, 1.05 ); }
-main .top_banner_wrap img:hover { transition: all .4s }
+/*main .top_banner img:hover { transition: 4s linenear; transform: scale(1); }*/
+
+
+/** footer */

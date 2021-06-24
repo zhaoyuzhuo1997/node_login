@@ -1,0 +1,76 @@
+<div class='board_default form'>
+	{% if config.categories.length > 0 %}
+	<dl>
+		<dt>분류</dt>
+		<dd>
+			<select name='category'>
+				<option value=''>- 선택하세요 -</option>
+				{% for item in config.categories %}
+				<option value='{{ item }}'{% if item == category %} selected{% endif %}>{{ item }}</option>
+				{% endfor %}
+			</select>
+		</dd>
+	</dl>
+	{% endif %}
+	<dl>
+		<dt>제목</dt>
+		<dd>
+			<input type='text' name='subject' value='{{ subject }}'>
+		</dd>
+	</dl>
+	<dl>
+		<dt>작성자</dt>
+		<dd>
+			<input type='text' name='poster' value='{% if poster %}{{ poster }}{% else %}{{ member.memNm }}{% endif %}'>
+		</dd>
+	</dl>
+	{% if not isLogin %}
+	<dl>
+		<dt>비밀번호</dt>
+		<dd>
+			<input type='password' name='password' placeholder='게시글 수정, 삭제 비밀번호'>
+		</dd>
+	</dl>
+	{% endif %}
+	<textarea name='contents' id='contents'>{{ contents | safe }}</textarea>
+	{% if config.useImageUpload %}
+	<dl class='mt15'>
+		<dt>이미지</dt>
+		<dd>
+			<span class='btn2 upload_image'>이미지 추가</span>
+			<span class='uploaded_images'>
+			{% if editorFiles.length > 0 %}
+			{% for item in editorFiles %}
+				<span class='file_box' data-idx='{{ item.idx }}' data-url='{{ item.fileUrl }}'>
+					<a href='/file/download/{{ item.idx }}' target='ifrmHidden'>{{ item.fileName }}</a>
+					<i class='remove xi-file-remove'></i>
+					<i class='addContents xi-upload'></i>
+				</span> 
+			{% endfor %}
+			{% endif %}
+			</span>
+		</dd>
+	</dl>
+	{% endif %}
+	{% if config.useFileUpload %}
+	<dl class='mt20'>
+		<dt>파일첨부</dt>
+		<dd>
+			<span class='btn2 upload_file'>파일 첨부</span>
+			<span class='uploaded_files'>
+			{% if attachedFiles.length > 0 %}
+			{% for item in attachedFiles %}
+				<span class='file_box' data-idx='{{ item.idx }}' data-url='{{ item.fileUrl }}'>
+					<a href='/file/download/{{ item.idx }}' target='ifrmHidden'>{{ item.fileName }}</a>
+					<i class='remove xi-file-remove'></i>
+				</span> 
+			{% endfor %}
+			{% endif %}
+			</span>
+		</dd>
+	</dl>
+	{% endif %}
+	
+	<input type='submit' value="{{ '수정' if idx else '작성' }}하기" class='submit_btn'>
+</div>
+<!--// board_default -->

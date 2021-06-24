@@ -1,5 +1,6 @@
 const { joinValidator } = require('../middlewares/join_validator');
 const { loginValidator } = require('../middlewares/login_validator');
+const { findPwValidator, changePwValidator } = require("../middlewares/findpw_validator");
 const { memberOnly, guestOnly } = require('../middlewares/member_only');
 const member = require("../models/member"); // Member Model
 const naverLogin = require('../models/naver_login'); // 네이버 로그인
@@ -11,8 +12,10 @@ const router = express.Router();
 router.route("/join")
 		/** 회원 가입 양식 */
 		.get(guestOnly, (req, res, next) => {			
+			const isPasswordNotChange = req.session.naverProfile?true:false;
 			const data = {
 				naverProfile : req.session.naverProfile || {},
+				isPasswordNotChange,
 			};
 			
 			if (data.naverProfile) {
@@ -47,6 +50,12 @@ router.route('/login')
 			const data = {
 				naverLoginUrl : naverLogin.getCodeUrl(),
 			};
+			
+			// returnUrl
+			if (req.query.returnUrl) {
+				req.session.returnUrl = req.query.returnUrl;
+			}
+			
 			return res.render("member/login", data);
 		})
 		/** 로그인 처리 */
@@ -54,7 +63,12 @@ router.route('/login')
 			
 			const result = await member.login(req.body.memId, req.body.memPw, req);
 			if (result) { // 로그인 성공 -> 메인 페이지
-				return go("/", res, "parent");
+				let url = "/";
+				if (req.session.returnUrl) {
+					url = req.session.returnUrl;
+					delete req.session.returnUrl;
+				}
+				return go(url, res, "parent");
 			}
 			
 			return alert("로그인에 실패하셨습니다.", res);
@@ -82,5 +96,54 @@ router.get("/login_callback", async (req, res, next) => {
 		return res.redirect('/member/join');
 	}
 });
+
+/** 아이디 찾기 */
+router.route("/find_id")
+	/** 찾기 양식 */
+	.get(guestOnly, (req, res, next) => {
+		
+		return res.render("member/find_id");
+	})
+	/** 찾기 처리 */
+	.post(guestOnly, async (req, res, next) => {
+		try {
+			const memId = await member.findId(req.body.memNm, req.body.cellPhone);
+			if (!memId) {
+				throw new Error('일치하는 아이디가 없습니다.');
+			}
+			
+			return res.render("member/find_id", { memId });
+		} catch (err) {
+			return alert(err.message, res, -1);
+		}
+	});
+
+/** 비밀번호 찾기 */
+router.route("/find_pw")
+	.get(guestOnly, (req, res, next) => {
+		return res.render("member/find_pw");
+	})
+	.post(guestOnly, findPwValidator, async (req, res, next) => {
+		try {
+			const memNo = await member.data(req.body).findPw();
+			if (!memNo) {
+				throw new Error('일치하는 회원이 없습니다.');
+			}
+			req.session.findPwMemNo = memNo;
+			return res.render("member/change_password");
+		} catch (err) {
+			return alert(err.message, res, -1);
+		}
+	})
+	/** 비밀번호 변경 처리 */
+	.patch(guestOnly, changePwValidator, async (req, res, next) => {
+		const result = await member.changePw(req.session.findPwMemNo, req.body.memPw);
+		if (result) { // 비밀번호 변경 성공 -> 로그인 
+			delete req.session.findPwMemNo;
+			return go("/member/login", res, "parent");
+		}
+		
+		return alert("비밀번호 변경 실패하였습니다.", res);
+	});
 
 module.exports = router;

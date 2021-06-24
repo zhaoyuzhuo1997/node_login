@@ -32,8 +32,8 @@ module.exports.guestOnly = (req, res, next) => {
 */
 module.exports.adminOnly = (req, res, next) => {
 	if (!req.isLogin || !req.member.isAdmin) {
-		//res.status(401); 
-		//return alert('페이지 접속 권한이 없습니다.', res, -1);
+		res.status(401); 
+		return alert('페이지 접속 권한이 없습니다.', res, -1);
 	}
 	
 	next();

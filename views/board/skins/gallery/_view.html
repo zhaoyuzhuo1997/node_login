@@ -1,0 +1,49 @@
+<div class='board_default view'>
+	<div class='subject'>{{ subject }}</div>
+	<div class='poster_info'>
+	<div class='poster'>
+			{{ poster }}({% if memId %}{{ memId }}{% else %}비회원{% endif %})
+		</div>
+		<div class='date'>
+			{% if viewCount > 0 %}조회수 : {{ viewCountStr }} / {% endif %}
+			작성일 : {{ regDt }}
+		</div>
+		
+	</div>
+	<div class='contents'>
+		{{ contents | safe }}
+	</div>
+	{% if attachedFiles.length > 0 %}
+	<ul class='attached_files'>
+		{% for item in attachedFiles %}
+		<li>
+			첨부파일 {{ loop.index }} : 
+			<a href='/file/download/{{ item.idx }}' target='ifrmHidden'>{{ item.fileName }}</a>
+		</li>	
+		{% endfor %}
+	</ul>
+	{% endif %}
+	
+	<div class='btns'>
+		<a href='/board/{{ id }}' class='btn1'>글 쓰기</a>
+		{% if isWritable %}
+		<a href='/board/update/{{ idx }}' class='btn1'>글 수정</a>
+		{% endif %}
+		{% if isDeletable %}
+		<span class='btn1 post_delete' data-idx='{{ idx }}'>글 삭제</span>
+		{% endif %}
+		<a href='/board/list/{{ id }}' class='btn1'>글 목록</a>
+	</div>
+</div>
+<!--// board_default -->
+
+{% if config.useComment %} 
+{% include config.skinPath.comment %}
+{% endif %}
+
+
+{% if list.length > 0 %}
+<div class='post_list_bottom'>
+{% include config.skinPath.list %}
+</div>
+{% endif %}

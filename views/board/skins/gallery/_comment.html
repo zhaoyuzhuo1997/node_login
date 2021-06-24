@@ -1,0 +1,54 @@
+<div class='board_default comment'>
+	{% if config.accessType == 'member' and  not isLogin %}
+	<div class='member_only_comment'>@로그인 후 댓글 작성이 가능합니다.</div>
+	{% else %}
+	<form method='post' action='/board/comment' target='ifrmHidden' autocomplete='off'>
+		<input type='hidden' name='idxBoard' value='{{ idx }}'>
+		<div class='comment_info'>
+			작성자 : <input type='text' name='poster' value='{% if isLogin %}{{ member.memNm }}{% endif %}'>
+			{% if not isLogin %}
+			/ 비밀번호 : <input type='password' name='password'>
+			{% endif %}
+		</div>
+		<div class='comment_form'>
+			<textarea id='comment' name='comment'></textarea>
+			<input type='submit' value='댓글작성' class='write_comment'>
+		</div>
+	</form>
+	{% endif %}
+	
+	{% if comments.length > 0 %}
+	<ul class='comment_list'>
+	{% for item in comments %}
+		<li class='comment_wrap' id='comment_{{ item.idx }}' data-idx='{{ item.idx }}'>
+			<div class='top_box'>
+				<div class='left'>{{ item.poster }}{% if item.memId %}({{ item.memId }}){% endif %}</div>
+				<div class='right'>{{ item.regDt }}</div>
+			</div>
+			<div class='comment'>{{ item.commentHtml | safe }}</div>
+			<div class='btns'>
+				{% if item.isWritable %}
+				<span class='btn2 update'>수정</span>
+				{% endif %}
+				{% if item.isDeletable %}
+				<a href='/board/comment/delete/{{ item.idx }}' class='btn2' onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+				{% endif %}
+			</div>
+		</li>
+	{% endfor %}
+	</ul>
+	<!--// comment_list -->
+	{% endif %}
+</div>
+<!--// comment_box -->
+
+{% if idx_comment %}
+<script> 
+$(function() {
+	setTimeout(function() {
+	const url = "/board/comment/{{ idx_comment }}";
+	layer.popup(url, 450, 450);
+	}, 1000);
+});
+</script>
+{% endif %}

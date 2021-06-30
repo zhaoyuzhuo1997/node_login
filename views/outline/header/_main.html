@@ -1,23 +1,26 @@
 <div class="top_mini_menu">
 	<div class="top_mini_menu_inner">
 		<div class="mini_box_left">
-			<a href="/" class="left_store">
-				<i class="xi-cart-o">풋셀스토어</i>
+			{% if isLogin %}
+			<!--
+			<a href="/mypage/myinfo" class="left_join">
+				<i class='xi-user-o'></i> INFO
 			</a>
-			<a href="/" class="left_Ins">
-				<i class="xi-instagram">인스타그램</i>
+			-->
+			<a href='/member/logout' class="left_login">
+				<i class='xi-log-out'></i> LOGOUT
 			</a>
+			{% else %}
+			<a href="/member/join" class="left_join">
+				<i class='xi-user-plus-o'></i> SIGN-UP
+			</a>
+			<a href="/member/login" class="left_login">
+				<i class='xi-log-in'></i> LOGIN
+			</a>
+			{% endif %}
 		</div>
 		
 		<div class="mini_box_right">
-			<div class="main_login">
-				<form action='/'>
-						<button class="login_btn" value='' onclick="login">
-						 <span><i class='xi-power-off'></i></span>
-						</button>
-				</form>
-			</div>
-			
 			<div class='logo_search'>
 				<div class='search'>
 					<form method='get' action='/board/search' autocomplete='off'>
@@ -27,7 +30,6 @@
 					</form>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 	<!--// search, login-->
@@ -47,10 +49,10 @@
 				<div class="category_bar">스니커</div>
 				<div class="category_bar_a">
 					<th>
-						<tr><a href='/'>스니커뉴스</a></tr>
-						<tr><a href='/'>조던뉴스</a></tr>
-						<tr><a href='/'>위키</a></tr>
-						<tr><a href='/'>리뷰</a></tr>
+						<tr><a href='/board/list/sneaker?category=스니커뉴스'>스니커뉴스</a></tr>
+						<tr><a href='/board/list/sneaker?category=조던뉴스'>조던뉴스</a></tr>
+						<tr><a href='/board/list/sneaker?category=위키'>위키</a></tr>
+						<tr><a href='/board/list/sneaker?category=리뷰'>리뷰</a></tr>
 					</th>
 				</div>
 			</div>
@@ -59,11 +61,11 @@
 				<div class="category_bar">커뮤니티</div>
 				<div class="category_bar_a">
 					<th>
-						<tr><a href='/'>스니커톡</a></tr>
-						<tr><a href='/'>패션톡</a></tr>
-						<tr><a href='/'>Q&amp;A</a></tr>
-						<tr><a href='/'>핫딜톡</a></tr>
-						<tr><a href='/'>프리톡</a></tr>
+						<tr><a href='/board/list/community?category=스니커톡'>스니커톡</a></tr>
+						<tr><a href='/board/list/community?category=패션톡'>패션톡</a></tr>
+						<tr><a href='/board/list/community?category=Q&A'>Q&amp;A</a></tr>
+						<tr><a href='/board/list/community?category=핫딜톡'>핫딜톡</a></tr>
+						<tr><a href='/board/list/community?category=프리톡'>프리톡</a></tr>
 					</th>
 				</div>
 			</div>
@@ -72,11 +74,11 @@
 				<div class="category_bar">갤러리</div>
 				<div class="category_bar_a">
 					<th>
-						<tr><a href='/'>착갤</a></tr>
-						<tr><a href='/'>염갤</a></tr>
-						<tr><a href='/'>셀럽</a></tr>
-						<tr><a href='/'>자갤</a></tr>
-						<tr><a href='/'>릴레이</a></tr>
+						<tr><a href='/board/list/gallery?category=착갤'>착갤</a></tr>
+						<tr><a href='/board/list/gallery?category=염갤'>염갤</a></tr>
+						<tr><a href='/board/list/gallery?category=셀럽'>셀럽</a></tr>
+						<tr><a href='/board/list/gallery?category=자갤'>자갤</a></tr>
+						<tr><a href='/board/list/gallery?category=릴레이'>릴레이</a></tr>
 					</th>
 				</div>
 			</div>
@@ -85,9 +87,9 @@
 				<div class="category_bar">마켓</div>
 				<div class="category_bar_a">
 					<th>
-						<tr><a href='/'>스니커마켓</a></tr>
-						<tr><a href='/'>패션마켓</a></tr>
-						<tr><a href='/'>BUY</a></tr>
+						<tr><a href='/board/list/market?category=스니커마켓'>스니커마켓</a></tr>
+						<tr><a href='/board/list/market?category=패션마켓'>패션마켓</a></tr>
+						<tr><a href='/board/list/market?category=BUY'>BUY</a></tr>
 					</th>
 				</div>
 			</div>

@@ -1,0 +1,66 @@
+<!-- 최신 이미지 게시글 -->
+<div class='layout_width'>
+	<div class='latest_posts'>
+	{% for boardId in boardIds %}
+	<div class='latest_posts_box'>
+		<ul class='tab_wrap'>
+		{% for category in boards[loop.index - 1][boardId] %}
+			<li class='tab{% if loop.index == 1 %} on{% endif %}' data-cate_num='{{ loop.index }}'>{{ category }}</li>
+		{% endfor %}
+		</ul>
+		
+		{% if latestPosts[boardId].length > 0 %}
+		
+		{% for category in boards[loop.index - 1][boardId] %}
+			<ul class='post_list post_list_{{ loop.index }}{% if loop.index != 1 %} dn{% endif %}'>
+			{% for item in latestPosts[boardId][loop.index - 1] %}
+				<li>
+					<span class='num'>{{ loop.index }}</span>
+					<a href='/board/view/{{ item.idx }}'>{{ item.subject }}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		{% endfor %}
+		{% endif %}
+	</div>
+	{% endfor %}
+	
+	{% if gBoardCategory.length > 0 %}
+	<div class='latest_posts_box latest_gallery_box latest_gallery_box1'>
+		<ul class='tab_wrap'>
+		{% for category in gBoardCategory %}
+		{% if loop.index < 3 %}
+			<li class='tab{% if loop.index == 1 %} on{% endif %}' data-cate_num='{{ loop.index }}'>{{ category }}</li>
+		{% endif %}
+		{% endfor %}
+		</ul>
+		{% for category in gBoardCategory %}
+		<div class='post_list post_gallery post_list_{{ loop.index }}{% if loop.index != 1 %} dn{% endif %}'>
+		{% for item in latestGPosts[loop.index - 1] %}
+			<a href='/board/view/{{ item.idx }}' class='posts'>
+				<div class='photo' style="background:url('{{ item.listImage }}') no-repeat center center; background-size: cover;"></div>
+				<div class='title'>{{ item.subject }}</div>
+			</a>
+		{% endfor %}
+		</div>
+		{% endfor %}
+		
+	</div>
+	
+	<div class='latest_gallery_box latest_gallery_box2'>
+		<ul class='tab_wrap'>
+		{% for category in gBoardCategory %}
+		{% if loop.index >= 3 %}
+			<li class='tab{% if loop.index == 1 %} on{% endif %}' data-cate_num='{{ loop.index }}'>{{ category }}</li>
+		{% endif %}
+		{% endfor %}
+		</ul>
+		
+	</div>
+	<!--// latest_gallery_box -->
+	{% endif %}
+	
+
+	</div>
+	<!--// latest_posts -->
+</div>

@@ -41,7 +41,6 @@ textarea { border: 1px solid #d5d5d5; min-height: 150px; resize: none; border-ra
 .btn1, .btn2 { display: inline-block; padding: 5px 15px; background-color: blue; color: #ffffff; border-radius: 5px; font-size: 11px; cursor: pointer; border: 0; }
 .btn2 { background-color: red; }
 
-
 /** outline/header/_main.html */
 .main_menu { background-color: #d5d5d5; }
 .main_menu li { float: left; }

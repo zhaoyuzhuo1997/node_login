@@ -8,9 +8,9 @@ const logger = require('../lib/logger');
 *
 */
 const naverLogin = {
-	clientId : 'P78Vj1Hp_UBEisn_PtLq',
-	secret : 'gUFQ5V8mFP',
-	redirectUri : 'http://code-factory.co.kr:3000/member/login_callback',
+	clientId : 'd1NsyjyywHTa3GItkprI',
+	secret : '3fx_WgFlNq',
+	redirectUri : 'https://aizhao.xyz/member/login_callback',
 	
 	/** 
 	* code 발급 요청 URL 

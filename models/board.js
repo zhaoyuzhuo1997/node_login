@@ -40,9 +40,9 @@ const board = {
 	*/
 	create : async function(id, boardNm) {
 		try {
-			const sql = "INSERT INTO board (id, boardNm) VALUES (:id, :boardNm)";
+			const sql = "INSERT INTO board (id, boardNm, regDt) VALUES (:id, :boardNm, :regDt)";
 			await sequelize.query(sql, {
-				replacements : { id, boardNm },
+				replacements : { id, boardNm, regDt : new Date() },
 				type : QueryTypes.INSERT,
 			});
 			
@@ -145,7 +145,8 @@ const board = {
 									rowsPerPage = :rowsPerPage,
 									useViewList = :useViewList,
 									useComment = :useComment,
-									skin = :skin 
+									skin = :skin,
+									regDt = :regDt
 								WHERE 
 									id = :id`;
 			const replacements = {
@@ -158,6 +159,7 @@ const board = {
 				useViewList : params.useViewList?1:0,
 				useComment : params.useComment?1:0,
 				skin : params.skin,
+				regDt : new Date(),
 				id : params.id,
 			};
 			
@@ -207,8 +209,8 @@ const board = {
 	*/
 	write : async function() {
 		try {
-			const sql = `INSERT INTO boarddata (gid, boardId, category, memNo, poster, subject, contents, password, isImagePost) 
-										VALUES (:gid, :boardId, :category, :memNo, :poster, :subject, :contents, :password, :isImagePost)`;
+			const sql = `INSERT INTO boarddata (gid, boardId, category, memNo, poster, subject, contents, password, isImagePost, regDt) 
+										VALUES (:gid, :boardId, :category, :memNo, :poster, :subject, :contents, :password, :isImagePost, :regDt)`;
 			
 			
 			const memNo = this.session.memNo || 0;
@@ -234,6 +236,7 @@ const board = {
 				contents : this.params.contents,
 				password : hash,
 				isImagePost,
+				regDt : new Date(),
 			};		
 
 			const result = await sequelize.query(sql, {
@@ -494,8 +497,8 @@ const board = {
 				hash = await bcrypt.hash(this.params.password, 10);
 			}
 			
-			const sql = `INSERT INTO boardcomment (idxBoard, memNo, poster, password, comment)
-									VALUES (:idxBoard, :memNo, :poster, :password, :comment)`;
+			const sql = `INSERT INTO boardcomment (idxBoard, memNo, poster, password, comment, regDt)
+									VALUES (:idxBoard, :memNo, :poster, :password, :comment, :regDt)`;
 			
 			const replacements = {
 				idxBoard : this.params.idxBoard,
@@ -503,6 +506,7 @@ const board = {
 				poster : this.params.poster,
 				password : hash,
 				comment : this.params.comment,
+				regDt : new Date(),
 			};
 			
 			const result = await sequelize.query(sql, {

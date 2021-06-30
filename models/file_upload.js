@@ -21,12 +21,13 @@ const fileUpload = {
 				throw new Error('gid 누락');
 			}
 			
-			const sql = "INSERT INTO filedata (gid, fileName, mimeType, isAttached) VALUES (:gid, :fileName, :mimeType, :isAttached)";
+			const sql = "INSERT INTO filedata (gid, fileName, mimeType, isAttached, regDt) VALUES (:gid, :fileName, :mimeType, :isAttached, :regDt)";
 			const replacements = {
 					gid : params.gid,
 					fileName : params.originalname, 
 					mimeType : params.mimetype,
 					isAttached : params.isAttached,
+					regDt : new Date(),
 			};
 			
 			const result = await sequelize.query(sql, {
@@ -35,7 +36,7 @@ const fileUpload = {
 			});
 			
 			const idx = result[0];
-			const folder = "public/upload/" + (idx % 10);
+			const folder = path.join(__dirname + "/../public/upload/" + (idx % 10));
 		
 			return { idx, folder };
 		} catch (err) {

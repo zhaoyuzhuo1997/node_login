@@ -1,59 +1,76 @@
-% extends '../layout.html' %}
+{% extends '../layout.html' %}
 
 <!-- 회원 가입, 수정 양식 -->
 {% block content %}
-<form method='post' action="{{ '/mypage/myinfo' if isLogin else '/member/join' }}" target='ifrmHidden' autocomplete='off'>
-	{% if naverProfile.id %}
-	<h1>네이버 아이디로 회원 가입</h1>
-	{% endif %}
-	<dl>
-		<dt>아이디</dt>
-		<dd>
-			{% if isLogin %}
-			{{ member.memId }}
-			{% else %}
-			<input type='text' name='memId'>
+<div class="join_form_wrap">
+	<div class="join_form">
+		<form method='post' action="{{ '/mypage/myinfo' if isLogin else '/member/join' }}" target='ifrmHidden' autocomplete='off'>
+			{% if naverProfile.id %}
+			<h1>네이버 아이디로 회원 가입</h1>
 			{% endif %}
-		</dd>
-	</dl>
-	{% if not isPasswordNotChange %}
-	<dl>
-		<dt>비밀번호</dt>
-		<dd>
-			<input type='password' name='memPw'>
-		</dd>
-	</dl>
-	<dl>
-		<dt>비밀번호 확인</dt>
-		<dd>
-			<input type='password' name='memPwRe'>
-		</dd>
-	</dl>
-	<dl>
-		<dt>비밀번호 찾기 힌트</dt>
-		<dd>
-			<input type='text' name='pwHint' value='{{ member.pwHint }}'>
-		</dd>
-	</dl>
-	{% endif %}
-	<dl>
-		<dt>회원명</dt>
-		<dd>
-			<input type='text' name='memNm' value='{{ member.memNm }}'>
-		</dd>
-	</dl>
-	<dl>
-		<dt>이메일</dt>
-		<dd>
-			<input type='email' name='email' value='{{ member.email }}'>
-		</dd>
-	</dl>
-	<dl>
-		<dt>휴대전화번호</dt>
-		<dd>
-			<input type='text' name='cellPhone' value='{{ member.cellPhone }}'>
-		</dd>
-	</dl>
-	<input type='submit' value="{{ '정보수정' if isLogin else '회원가입' }}">
-</form>
+			<div class="join_bar">
+				 회원가입
+			</div>
+			
+			<div class="join_box">
+					<dl>
+						<dt>아이디</dt>
+						<dd>
+							{% if isLogin %}
+							{{ member.memId }}
+							{% else %}
+							<input type='text' name='memId'>
+							{% endif %}
+						</dd>
+					</dl>
+					{% if not isPasswordNotChange %}
+					<dl>
+						<dt>비밀번호</dt>
+						<dd>
+							<input type='password' name='memPw'>
+						</dd>
+					</dl>
+					<dl>
+						<dt>비밀번호 확인</dt>
+						<dd>
+							<input type='password' name='memPwRe'>
+						</dd>
+					</dl>
+					<dl>
+						<dt>비밀번호 힌트</dt>
+						<dd>
+							<input type='text' name='pwHint' value='{{ member.pwHint }}'>
+						</dd>
+					</dl>
+					{% endif %}
+						<dl>
+						<dt>닉네임</dt>
+						<dd>
+							<input type='text' name='memNm' value='{{ member.memNm }}'>
+						</dd>
+					</dl>
+					<dl>
+						<dt>이메일 주소</dt>
+						<dd>
+							<input type='email' name='email' value='{{ member.email }}'>
+						</dd>
+					</dl>
+					<dl>
+						<dt>휴대전화번호</dt>
+						<dd>
+							<input type='text' name='cellPhone' value='{{ member.cellPhone }}'>
+						</dd>
+					</dl>
+					<div class="agree_join">
+						<div class="agree_font">
+							가입하기를 클릭하시면 약관에 동의하며 개인정보취급방침을 확인하신 것으로 간주됩니다.
+						</div>
+					</div>
+					<div class="join_btn">
+						<input type='submit' value="{{ '정보수정' if isLogin else '가입하기' }}">
+					</div>
+			</div>
+		</form>
+	</div>
+</div>
 {% endblock %}

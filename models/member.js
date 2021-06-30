@@ -40,8 +40,8 @@ const member = {
 				hash = await bcrypt.hash(data.memPw, 10);
 			}
 			
-			const sql = `INSERT INTO member (memId, memPw, pwHint, memNm, email, cellPhone, snsType, snsId)
-									VALUES (:memId, :memPw, :pwHint, :memNm, :email, :cellPhone, :snsType, :snsId)`;
+			const sql = `INSERT INTO member (memId, memPw, pwHint, memNm, email, cellPhone, snsType, snsId, regDt)
+									VALUES (:memId, :memPw, :pwHint, :memNm, :email, :cellPhone, :snsType, :snsId, :regDt)`;
 			
 			const replacements = {
 					memId : data.memId, 
@@ -52,6 +52,7 @@ const member = {
 					cellPhone : data.cellPhone,
 					snsType,
 					snsId,
+					regDt : new Date(),
 			};
 			
 			await sequelize.query(sql, {

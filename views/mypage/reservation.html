@@ -1,0 +1,43 @@
+{% extends '../layout.html' %}
+{% block content %}
+<table class='table_rows'>
+		<thead>
+			<tr>
+				<th width='100'>예약일시</th>
+				<th width='100'>예약상태</th>
+				<th width='100'>예약자</th>
+				<th width='170'>예약자 연락처</th>
+				<th width='350'>여행상품</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for item in list %}
+			<tr>
+				<td align='center'>{{ item.regDt }}</td>
+				<td align='center'>
+					{{ item.status }}
+				</td>
+				<td align='center'>
+					{{ item.name }}<br>
+					{% if item.memId %}({{ item.memId }}){% endif %}
+				</td>
+				<td align='center'>
+					{{ item.cellPhone }}<br>
+					{{ item.email }}
+				</td>
+				<td>
+					<a href='/travel/{{ item.goodsCd }}' target='_blank'>{{ item.goodsNm }}</a>
+					<br>
+					{{ item.startDate }}~{{ item.endDate }}
+				</td>
+				<td>
+					<a href='/travel/reservation/{{ item.idx }}' target='_blank' class='btn1'>자세히보기</a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
+	{{ pagination | safe }}
+{% endblock %}
